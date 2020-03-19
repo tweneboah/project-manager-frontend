@@ -12,7 +12,7 @@ export const fetchAllProjects = () => {
     try {
       const projectsResponse = await axios({
         method: "GET",
-        url: "/"
+        url: `${API_URL}/projects`
       });
       dispatch({
         type: FETCH_ALL_PROJECTS,
