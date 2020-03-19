@@ -23,7 +23,7 @@ const ProjectLists = (props) => {
         <h1>Loading</h1>
       ) : (
         <div>
-          <h1>Loaded</h1>
+          <h1>Loaded 2</h1>
         </div>
       )}
     </div>
