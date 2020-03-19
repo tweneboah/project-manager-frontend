@@ -1,5 +1,7 @@
 import axios from "axios";
+
 import { API_URL } from "../../../config/URLs";
+
 import {
   FETCH_ALL_PROJECTS,
   FETCH_ALL_PROJECTS_ERRORS,
@@ -15,7 +17,7 @@ export const fetchAllProjects = () => {
       //   url: "https:teklinco-project-manager.herokuapp.com/projects"
       // });
 
-      const projectsResponse = await axios.get(`${API_URL}`);
+      const projectsResponse = await axios.get(`${API_URL}/projects`);
       console.log(projectsResponse.data);
       dispatch({
         type: FETCH_ALL_PROJECTS,
