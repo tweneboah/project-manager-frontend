@@ -18,13 +18,43 @@ const ProjectLists = (props) => {
   };
   return (
     <div>
-      <h1>Projects</h1>
-      {projects == null ? (
-        <h1>Loading</h1>
+      {projects.projects === [] ? (
+        <LoadingComponent />
       ) : (
-        <div>
-          <h1>Loaded 2</h1>
-        </div>
+        <React.Fragment>
+          {/* First Container */}
+          <Grid
+            container
+            direction="column"
+            alignItems="center"
+            style={{ background: "green" }}>
+            <Grid item>
+              <h1>Project List</h1>
+              <hr />
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={goToCreateProject}>
+                Add Project
+              </Button>
+            </Grid>
+          </Grid>
+
+          {/* Second Container */}
+          <Grid container direction="row" justify="center">
+            {projects.projects.map((project) => {
+              return (
+                <Grid
+                  item
+                  md={3}
+                  key={project.id}
+                  style={{ background: "red", margin: "1px", flexGrow: 1 }}>
+                  <ProjectListItem project={project} />
+                </Grid>
+              );
+            })}
+          </Grid>
+        </React.Fragment>
       )}
     </div>
   );
