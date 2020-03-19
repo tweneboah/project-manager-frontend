@@ -15,9 +15,7 @@ export const fetchAllProjects = () => {
       //   url: "https:teklinco-project-manager.herokuapp.com/projects"
       // });
 
-      const projectsResponse = await axios.get(
-        "https:teklinco-project-manager.herokuapp.com/projects"
-      );
+      const projectsResponse = await axios.get("/projects");
       console.log(projectsResponse.data);
       dispatch({
         type: FETCH_ALL_PROJECTS,
