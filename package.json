@@ -2,6 +2,10 @@
   "name": "project-manager-frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "v12.16.0",
+    "npm": "6.13.4"
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.7",
     "@material-ui/icons": "^4.9.1",
