@@ -1,61 +1,147 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { TextField, Select, MenuItem, Button } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import Link from "@material-ui/core/Link";
+import { connect } from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { useParams } from "react-router-dom";
+import { loginUser } from "../../../redux/actions/users/usersActions";
 
-const LoginUser = () => {
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {"Copyright Ã‚Â© "}
+      <Link color="inherit" href="https://github.com/tweneboah">
+        <span>Tek-Linco Project Manager</span>
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(1)
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2)
+  }
+}));
+
+const LoginUser = (props) => {
+  const { loginUser } = props;
   const { control, handleSubmit, errors } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const userData = {
+      identifier: data.identifier,
+      password: data.password
+    };
+    await loginUser(userData);
+    //props.history.push(`/project/income/${projectId}`);
   };
 
+  const classes = useStyles();
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Controller
-          placeholder="Project Title"
-          as={TextField}
-          name="title"
-          control={control}
-          defaultValue=""
-          rules={{ required: true }}
-        />
-        {errors.title && "Your input is required"}
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}>
+          <Controller
+            placeholder="Username"
+            as={
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="identifier"
+                label="Username"
+                name="identifier"
+                autoComplete="text"
+                autoFocus
+              />
+            }
+            name="identifier"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+          />
+          {errors.identifier && (
+            <span style={{ color: "red" }}>Username is required</span>
+          )}
 
-        <Controller
-          placeholder="Project Description"
-          as={TextField}
-          name="description"
-          control={control}
-          defaultValue=""
-          rules={{ required: true }}
-        />
-        {errors.description && "Your input is required"}
+          {/* Password */}
+          <Controller
+            placeholder="Password"
+            as={
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="password"
+                label="Password"
+                name="password"
+                type="password"
+                autoFocus
+              />
+            }
+            name="password"
+            control={control}
+            defaultValue=""
+            rules={{ required: true }}
+          />
+          {errors.password && (
+            <span style={{ color: "red" }}>Password is required</span>
+          )}
 
-        <Controller
-          placeholder="Project Title"
-          as={
-            <Select>
-              <MenuItem value="education">Education</MenuItem>
-              <MenuItem value="estate">Estate</MenuItem>
-              <MenuItem value="business">Business</MenuItem>
-
-              <MenuItem value="other">Other</MenuItem>
-            </Select>
-          }
-          name="category"
-          control={control}
-          defaultValue=""
-          rules={{ required: true }}
-        />
-        {errors.category && "Your input is required"}
-
-        <Button variant="contained" color="primary" type="submit">
-          Create
-        </Button>
-      </form>
-    </div>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}>
+            Login
+          </Button>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>
   );
 };
 
-export default LoginUser;
+const actions = {
+  loginUser
+};
+export default connect(null, actions)(LoginUser);

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Tabs, Tab, makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import { logout } from "../../../redux/actions/users/usersActions";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -14,7 +16,8 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const PublicNavbarTabs = () => {
+const PrivateNavbarTabs = (props) => {
+  const { logout } = props;
   const classes = useStyles();
   const [tabsValue, setTabsValue] = useState(0);
 
@@ -29,15 +32,16 @@ const PublicNavbarTabs = () => {
         <Tab className={classes.root} label="Home" component={Link} to="/" />
         <Tab
           className={classes.linkItems}
-          label="Register"
+          label="Projects"
           component={Link}
-          to="/register"
+          to="/projects"
         />
-
-        <Tab label="Login" component={Link} to="/login" />
+        <Tab label="Logout" onClick={logout} />
       </Tabs>
     </React.Fragment>
   );
 };
-
-export default PublicNavbarTabs;
+const actions = {
+  logout
+};
+export default connect(null, actions)(PrivateNavbarTabs);

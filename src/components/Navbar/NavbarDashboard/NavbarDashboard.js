@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PublicNavbarDashboard from "../PublicNavbar/PublicNavbarDashboard";
 import { AppBar, Toolbar, makeStyles } from "@material-ui/core";
+import { setCurrentUser } from "../../../redux/actions/users/usersActions";
+import { connect } from "react-redux";
+import PrivateNavbarDashboard from "../PrivateNavbar/PrivateNavbarDashboard";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -15,13 +18,22 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const NavbarDashboard = () => {
+const NavbarDashboard = (props) => {
+  const { currentUser, setCurrentUser } = props;
+  useEffect(() => {
+    setCurrentUser();
+  }, [setCurrentUser]);
+  console.log(currentUser);
   const classes = useStyles();
   return (
     <React.Fragment>
       <AppBar className={classes.navbar}>
         <Toolbar>
-          <PublicNavbarDashboard />
+          {currentUser === null ? (
+            <PublicNavbarDashboard />
+          ) : (
+            <PrivateNavbarDashboard />
+          )}
         </Toolbar>
       </AppBar>
       <div style={{ marginBottom: "70px" }}></div>
@@ -29,4 +41,13 @@ const NavbarDashboard = () => {
   );
 };
 
-export default NavbarDashboard;
+const actions = {
+  setCurrentUser
+};
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userAuth.currentUser
+  };
+};
+export default connect(mapStateToProps, actions)(NavbarDashboard);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -11,9 +11,17 @@ import ProjectIncomeList from "./components/Income/ProjectIncomeList";
 import CreateIncomeForm from "./components/Forms/Income/CreateIncomeForm";
 import CreateExpensesForm from "./components/Forms/Expenses/CreateExpensesForm";
 import CreateProjectForm from "./components/Forms/Projects/CreateProjectForm";
-import Home from "./components/Home";
+import Home from "./components/HomePage/Home";
+import RegisterUser from "./components/Forms/Users/RegisterUser";
+import LoginUser from "./components/Forms/Users/LoginUser";
+import { setCurrentUser } from "./redux/actions/users/usersActions";
+import { connect } from "react-redux";
 
-const App = () => {
+const App = (props) => {
+  const { setCurrentUser } = props;
+  useEffect(() => {
+    setCurrentUser();
+  }, [setCurrentUser]);
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
@@ -21,6 +29,10 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={ProjectLists} />
+
+          <Route exact path="/register" component={RegisterUser} />
+
+          <Route exact path="/login" component={LoginUser} />
 
           <Route
             exact
@@ -63,4 +75,8 @@ const App = () => {
   );
 };
 
-export default App;
+const actions = {
+  setCurrentUser
+};
+
+export default connect(null, actions)(App);
