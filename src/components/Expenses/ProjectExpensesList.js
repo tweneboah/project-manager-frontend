@@ -1,12 +1,30 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import { Button, Grid, makeStyles } from "@material-ui/core";
 import ProjectExpensesListItem from "./ProjectExpensesListItem";
 import { fetchSingleProject } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 
+const useStyles = makeStyles((theme) => {
+  return {
+    parentOne: {
+      background: "#218c74",
+      paddingTop: "20px"
+    },
+    parentOneChild: {
+      textAlign: "center"
+    },
+    parentOneChild2: {
+      textAlign: "center",
+      margin: "20px"
+    }
+  };
+});
+
 const ProjectExpensesList = (props) => {
+  //css
+  const classes = useStyles();
   const { project, fetchSingleProject } = props;
   const { projectId } = useParams();
   useEffect(() => {
@@ -19,37 +37,47 @@ const ProjectExpensesList = (props) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       {project.singleProject === null ? (
         <LoadingComponent />
       ) : (
-        <div>
-          <h1>Expenses Dashboard</h1>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={goToCreateExpensePage}>
-            Add Expenses
-          </Button>
-          <h1>{project.singleProject.title}</h1>
-          <p>{project.singleProject.description}</p>
-          <hr></hr>
+        <React.Fragment>
+          {/* First Container */}
+          <Grid container justify="center" className={classes.parentOne}>
+            <Grid item className={classes.parentOneChild}>
+              <h1>
+                You are adding expenses to {project.singleProject.title} project
+              </h1>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={goToCreateExpensePage}>
+                Add Expenses
+              </Button>
+            </Grid>
+            {/* Child 1 */}
+            <Grid item className={classes.parentOneChild2}>
+              <p>{project.singleProject.description}</p>
+            </Grid>
+          </Grid>
+
           {project.singleProject.expenses.length <= 0 ? (
             <h1>No Expenses</h1>
           ) : (
-            <div>
+            // Second Container
+            <Grid container direction="column" justify="center">
               {project.singleProject.expenses.map((expense) => {
                 return (
-                  <div key={expense._id}>
+                  <Grid item key={expense._id}>
                     <ProjectExpensesListItem expense={expense} />
-                  </div>
+                  </Grid>
                 );
               })}
-            </div>
+            </Grid>
           )}
-        </div>
+        </React.Fragment>
       )}
-    </div>
+    </React.Fragment>
   );
 };
 const actions = {

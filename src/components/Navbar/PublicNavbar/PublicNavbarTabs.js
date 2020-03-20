@@ -27,7 +27,7 @@ const PublicNavbarTabs = () => {
     <React.Fragment>
       <Tabs value={tabsValue} onChange={tabHandleChange}>
         <Tab className={classes.root} label="Home" component={Link} to="/" />
-        <Tab
+        {/* <Tab
           className={classes.linkItems}
           label="Register"
           component={Link}
@@ -40,7 +40,7 @@ const PublicNavbarTabs = () => {
           component={Link}
           to="/dashboard"
         />
-        <Tab label="Login" component={Link} to="/login" />
+        <Tab label="Login" component={Link} to="/login" /> */}
 
         <Tab label="Projects" component={Link} to="/projects" />
       </Tabs>

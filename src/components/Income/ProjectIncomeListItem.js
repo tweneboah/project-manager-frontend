@@ -1,14 +1,73 @@
 import React from "react";
-import { Grid, Paper } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  Typography,
+  Divider,
+  Paper
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Moment from "react-moment";
+
+//CSS
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundColor: theme.palette.background.paper,
+    margin: "20px"
+  },
+  inline: {
+    display: "inline",
+    color: "#485460",
+    lineHeight: "1.5rem"
+  },
+  title: {
+    color: "red",
+    fontWeight: "bold"
+  }
+}));
 
 const ProjectIncomeListItem = (props) => {
   const { income } = props;
+  //CSS
+  const classes = useStyles();
+  const { expense } = props;
   return (
-    <React.Fragment>
-      <h1>{income.title}</h1>
-      <p>{income.description}</p>
-      <h3>{income.amount}</h3>
-    </React.Fragment>
+    <List className={classes.root}>
+      <Paper>
+        <ListItem alignItems="flex-start">
+          <ListItemAvatar>
+            <Avatar alt="Project Title" src="/static/images/avatar/1.jpg" />
+          </ListItemAvatar>
+          <ListItemText
+            className={classes.title}
+            primary={income.title}
+            secondary={
+              <React.Fragment>
+                <Typography
+                  component="span"
+                  variant="body2"
+                  className={classes.inline}
+                  color="textPrimary">
+                  {income.description}
+                </Typography>
+                {/* Author */}
+                <Typography style={{ color: "#218c74" }}>
+                  Author: Unknown
+                </Typography>
+                <Typography>
+                  <Moment style={{ color: "#8c7ae6" }} format="DD/MM/YYYY">
+                    {income.createdAt}
+                  </Moment>
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+      </Paper>
+    </List>
   );
 };
 
