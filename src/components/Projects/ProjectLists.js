@@ -3,11 +3,44 @@ import ProjectListItem from "./ProjectListItem";
 import { connect } from "react-redux";
 import { fetchAllProjects } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import StoreIcon from "@material-ui/icons/Store";
 import { Button, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => {
+  return {
+    parentOne: {
+      background: "#3c6382"
+    },
+    icon: {
+      marginTop: "30px",
+      fontSize: "3rem",
+      borderRadius: "50px",
+      border: "2px solid white",
+      padding: "10px",
+      color: "pink"
+    },
+    parentOneChild: {
+      textAlign: "center"
+    },
+    parentTwo: {
+      background: "#60a3bc"
+    },
+    parentTwoChild: {
+      margin: "10px",
+      minWidth: "30%"
+    }
+  };
+});
 
 const ProjectLists = (props) => {
+  //Css
+  const classes = useStyles();
+  //Props
   const { fetchAllProjects, projects, fetchAllExpenses } = props;
+  //UseEffect
+
   useEffect(() => {
     fetchAllProjects();
   }, [fetchAllProjects, fetchAllExpenses]);
@@ -27,28 +60,37 @@ const ProjectLists = (props) => {
             container
             direction="column"
             alignItems="center"
-            style={{ background: "green" }}>
+            className={classes.parentOne}>
             <Grid item>
-              <h1>Project List</h1>
-              <hr />
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={goToCreateProject}>
-                Add Project
-              </Button>
+              <div className={classes.parentOneChild}>
+                <StoreIcon color="primary" className={classes.icon} />
+                <h1>Your Projects</h1>
+
+                <hr />
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={goToCreateProject}>
+                  Add Project
+                </Button>
+              </div>
             </Grid>
           </Grid>
 
           {/* Second Container */}
-          <Grid container direction="row" justify="center">
+          <Grid
+            container
+            direction="row"
+            justify="space-between"
+            className={classes.parentTwo}>
             {projects.projects.map((project) => {
               return (
                 <Grid
                   item
-                  md={3}
                   key={project.id}
-                  style={{ background: "red", margin: "1px", flexGrow: 1 }}>
+                  md={3}
+                  sm={12}
+                  className={classes.parentTwoChild}>
                   <ProjectListItem project={project} />
                 </Grid>
               );
