@@ -11,6 +11,7 @@ import ProjectIncomeList from "./components/Income/ProjectIncomeList";
 import CreateIncomeForm from "./components/Forms/Income/CreateIncomeForm";
 import CreateExpensesForm from "./components/Forms/Expenses/CreateExpensesForm";
 import CreateProjectForm from "./components/Forms/Projects/CreateProjectForm";
+import Home from "./components/Home";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <BrowserRouter>
         <NavbarDashboard />
         <Switch>
+          <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={ProjectLists} />
 
           <Route
