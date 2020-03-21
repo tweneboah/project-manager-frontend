@@ -7,6 +7,7 @@ import StoreIcon from "@material-ui/icons/Store";
 import { Button, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
+import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -111,4 +112,6 @@ const actions = {
   fetchAllProjects
 };
 
-export default withRouter(connect(mapStateToProps, actions)(ProjectLists));
+export default withRouter(
+  connect(mapStateToProps, actions)(PrivateRoute(ProjectLists))
+);

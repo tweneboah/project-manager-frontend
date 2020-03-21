@@ -16,6 +16,7 @@ import RegisterUser from "./components/Forms/Users/RegisterUser";
 import LoginUser from "./components/Forms/Users/LoginUser";
 import { setCurrentUser } from "./redux/actions/users/usersActions";
 import { connect } from "react-redux";
+import Uploader from "./components/Uploader";
 
 const App = (props) => {
   const { setCurrentUser } = props;
@@ -27,7 +28,7 @@ const App = (props) => {
       <BrowserRouter>
         <NavbarDashboard />
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route exact path="/" component={Uploader} />
           <Route exact path="/projects" component={ProjectLists} />
 
           <Route exact path="/register" component={RegisterUser} />

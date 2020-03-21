@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => {
     child3: {
       background: "pink",
       flexGrow: 1,
-      border: "2px solid red",
+
       margin: "10px"
     },
     image1: {
@@ -40,6 +40,10 @@ const useStyles = makeStyles((theme) => {
     title: {
       fontSize: "1.8rem",
       margin: "9px"
+    },
+    childButton: {
+      margin: "20px",
+      border: "2px solid red"
     }
   };
 });
@@ -88,22 +92,28 @@ const Home = () => {
                 Customer Support
               </Typography>
             </div>
+            <Paper>
+              <div>
+                <Typography>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book. It has survived not only five centuries, but
+                  also the leap into electronic typesetting, remaining
+                  essentially unchanged. It was popularised in the 1960s with
+                  the release of Letraset sheets
+                </Typography>
+              </div>
+            </Paper>
             <div>
-              <Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-              </Typography>
-            </div>
-            <div>
-              <Button variant="outlined">Read More</Button>
+              <Button className={classes.childButton} variant="outlined">
+                Read More
+              </Button>
             </div>
           </div>
         </Grid>
+
         <Grid item md={4} sm={12} className={classes.child3}>
           <div style={{ textAlign: "center" }}>
             <div>
@@ -156,6 +166,13 @@ const Home = () => {
               <Button variant="outlined">Read More</Button>
             </div>
           </div>
+        </Grid>
+      </Grid>
+
+      {/* CALL */}
+      <Grid>
+        <Grid>
+          <h1>Call</h1>
         </Grid>
       </Grid>
     </div>
