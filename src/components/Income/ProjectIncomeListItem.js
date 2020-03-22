@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   List,
   ListItem,
@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
+import { connect } from "react-redux";
+import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -30,10 +32,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProjectIncomeListItem = (props) => {
-  const { income } = props;
   //CSS
   const classes = useStyles();
-  const { expense } = props;
+  const { income, author, incomeExpensesProjectCreator } = props;
+  //Grab the user from store who created this income
+  const authorName = author && author.username;
+  //Grab user who created the income
+  const userId = income && income.user;
+
+  //USEFFECT
+  useEffect(() => {
+    fetchUser(userId);
+  }, [incomeExpensesProjectCreator]);
+
+  const fetchUser = async (id) => {
+    await incomeExpensesProjectCreator(id);
+  };
   return (
     <List className={classes.root}>
       <Paper>
@@ -54,11 +68,18 @@ const ProjectIncomeListItem = (props) => {
                   {income.description}
                 </Typography>
                 {/* Author */}
-                <Typography style={{ color: "#218c74" }}>
-                  Author: Unknown
+                <Typography
+                  style={{
+                    color: "#218c74"
+                  }}>
+                  Author: {authorName}
                 </Typography>
                 <Typography>
-                  <Moment style={{ color: "#8c7ae6" }} format="DD/MM/YYYY">
+                  <Moment
+                    style={{
+                      color: "#8c7ae6"
+                    }}
+                    format="DD/MM/YYYY">
                     {income.createdAt}
                   </Moment>
                 </Typography>
@@ -71,4 +92,14 @@ const ProjectIncomeListItem = (props) => {
   );
 };
 
-export default ProjectIncomeListItem;
+const actions = {
+  incomeExpensesProjectCreator
+};
+
+const mapStateToProps = (state) => {
+  return {
+    author: state.userAuth.incomeExpensesProjectCreator
+  };
+};
+
+export default connect(mapStateToProps, actions)(ProjectIncomeListItem);

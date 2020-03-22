@@ -13,6 +13,9 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { loginUser } from "../../../redux/actions/users/usersActions";
 
 function Copyright() {
@@ -58,7 +61,7 @@ const LoginUser = (props) => {
       password: data.password
     };
     await loginUser(userData);
-    //props.history.push(`/project/income/${projectId}`);
+    props.history.push(`/projects`);
   };
 
   const classes = useStyles();
@@ -132,6 +135,7 @@ const LoginUser = (props) => {
             className={classes.submit}>
             Login
           </Button>
+          <ToastContainer autoClose={2000} />
         </form>
       </div>
       <Box mt={8}>

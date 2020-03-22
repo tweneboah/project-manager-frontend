@@ -13,12 +13,13 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
-
 import { createExpenses } from "../../../redux/actions/expenses/expensesActions";
+import LoadingComponent from "../../LoadingComponent/LoadingComponent";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright Â© "}
+      {"Copyright � "}
       <Link color="inherit" href="https://github.com/tweneboah">
         <span>Tek-Linco Project Manager</span>
       </Link>{" "}
@@ -49,23 +50,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateExpensesForm = (props) => {
+  //css
+  const classes = useStyles();
   const { projectId } = useParams();
-  console.log(props);
-  const { createExpenses } = props;
+  const { createExpenses, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
+  const jwt = currentUser && currentUser.jwt;
+  const id = currentUser && currentUser._id;
 
   const onSubmit = async (data) => {
     const incomeData = {
       title: data.title,
       description: data.description,
       amount: data.amount,
-      project: projectId
+      project: projectId,
+      merchant_contact: data.merchant_contact,
+      merchant_name: data.merchant_name,
+      user: id
     };
-    await createExpenses(incomeData);
+    await createExpenses(incomeData, jwt);
     props.history.push(`/project/expenses/${projectId}`);
   };
-
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -151,6 +156,44 @@ const CreateExpensesForm = (props) => {
             <span style={{ color: "red" }}>Amount is required</span>
           )}
 
+          {/* Merchant name */}
+
+          <Controller
+            placeholder="Merchant's Name"
+            as={
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="amount"
+                label="Merchant's Name"
+                type="text"
+                autoFocus
+              />
+            }
+            name="merchant_name"
+            control={control}
+            defaultValue=""
+          />
+
+          {/* Merchant Contact */}
+          <Controller
+            placeholder="Merchant's Contact"
+            as={
+              <TextField
+                variant="outlined"
+                margin="normal"
+                fullWidth
+                id="merchant_contact"
+                label="Merchant's Contact"
+                type="number"
+                autoFocus
+              />
+            }
+            name="merchant_contact"
+            control={control}
+            defaultValue=""
+          />
           <Button
             type="submit"
             fullWidth
@@ -171,4 +214,9 @@ const CreateExpensesForm = (props) => {
 const actions = {
   createExpenses
 };
-export default connect(null, actions)(CreateExpensesForm);
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userAuth.currentUser
+  };
+};
+export default connect(mapStateToProps, actions)(CreateExpensesForm);

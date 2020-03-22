@@ -23,7 +23,7 @@ const NavbarDashboard = (props) => {
   useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);
-  console.log(currentUser);
+
   const classes = useStyles();
   return (
     <React.Fragment>

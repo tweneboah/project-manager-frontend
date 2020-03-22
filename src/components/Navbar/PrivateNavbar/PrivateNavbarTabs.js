@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme) => {
 });
 
 const PrivateNavbarTabs = (props) => {
-  const { logout } = props;
+  const { logout, userAuth } = props;
   const classes = useStyles();
   const [tabsValue, setTabsValue] = useState(0);
+  const username = userAuth && userAuth.username;
 
   //TAB HandleChange
   const tabHandleChange = (event, newValue) => {
@@ -37,6 +38,7 @@ const PrivateNavbarTabs = (props) => {
           to="/projects"
         />
         <Tab label="Logout" onClick={logout} />
+        <Tab label={`Logged in as ${username}`} />
       </Tabs>
     </React.Fragment>
   );
@@ -44,4 +46,11 @@ const PrivateNavbarTabs = (props) => {
 const actions = {
   logout
 };
-export default connect(null, actions)(PrivateNavbarTabs);
+
+const mapStateToProps = (state) => {
+  return {
+    userAuth: state.userAuth.myProfile
+  };
+};
+
+export default connect(mapStateToProps, actions)(PrivateNavbarTabs);

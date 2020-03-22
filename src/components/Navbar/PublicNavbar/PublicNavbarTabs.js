@@ -35,6 +35,8 @@ const PublicNavbarTabs = () => {
         />
 
         <Tab label="Login" component={Link} to="/login" />
+
+        <Tab label="Drag" component={Link} to="/drag" />
       </Tabs>
     </React.Fragment>
   );

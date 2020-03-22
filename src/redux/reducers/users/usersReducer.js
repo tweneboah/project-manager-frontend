@@ -4,12 +4,16 @@ import {
   LOGIN_USER_ERROR,
   LOGIN_USER,
   SET_CURRENT_USER,
-  USER_LOGOUT
+  USER_LOGOUT,
+  GET_MY_PROFILE,
+  EXPENSES_PROJECT_INCOME_CREATOR
 } from "../../actions/actionTypes/actionTypes";
 
 const INITIAL_STATE = {
   currentUser: null,
-  authError: null
+  authError: null,
+  myProfile: null,
+  incomeExpensesProjectCreator: null
 };
 const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -29,6 +33,16 @@ const usersReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         authError: action.payload
+      };
+    case GET_MY_PROFILE:
+      return {
+        ...state,
+        myProfile: action.payload
+      };
+    case EXPENSES_PROJECT_INCOME_CREATOR:
+      return {
+        ...state,
+        incomeExpensesProjectCreator: action.payload
       };
     case USER_LOGOUT:
       return {

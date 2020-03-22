@@ -1,57 +1,148 @@
 import React from "react";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
+import { makeStyles } from "@material-ui/styles";
+import { CssBaseline, Grid, Hidden } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import footerAdornment from "../../images/bg.jpg";
+import facebook from "../../images/bg.jpg";
+import twitter from "../../images/bg.jpg";
+import instagram from "../../images/bg.jpg";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+const useStyles = makeStyles((theme) => {
+  return {
+    footer: {
+      backgroundColor: "#2F464C",
+      width: "100%",
+      zIndex: 1302,
+      position: "relative"
+    },
+    adorment: {
+      width: "25em",
+      verticalAlign: "bottom",
+      [theme.breakpoints.down("md")]: {
+        width: "21em"
+      },
+      [theme.breakpoints.down("sm")]: {
+        width: "18em"
+      }
+    },
+    mainContainer: {
+      position: "absolute" //This means we can move all the elements in the container regardles of other elements
+    },
+    link: {
+      color: "white",
+      fontFamily: "Arial",
+      fontSize: "0.75rem",
+      fontWeight: "bold",
+      textDecoration: "none"
+    },
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "40vh"
-  },
-  main: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2)
-  },
-  footer: {
-    padding: theme.spacing(3, 2),
-    marginTop: "auto",
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[200]
-        : theme.palette.grey[800]
-  }
-}));
+    gridItem: {
+      margin: "3rem"
+    },
+    icon: {
+      height: "3rem",
+      width: "3rem",
+      [theme.breakpoints.down("xs")]: {
+        height: "2rem",
+        width: "2rem"
+      }
+    },
+    socialContainer: {
+      position: "absolute",
+      marginTop: "-6em",
+      right: "1.5em",
+      [theme.breakpoints.down("xs")]: {
+        right: "0.8em"
+      }
+    }
+  };
+});
 
 const FooterComponent = () => {
   const classes = useStyles();
-
   return (
-    <div className={classes.root}>
+    <footer className={classes.footer}>
       <CssBaseline />
+      <Hidden mdDown>
+        <Grid container justify="center" className={classes.mainContainer}>
+          {/* Item 2 */}
+          <Grid item className={classes.gridItem}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item className={classes.link} component={Link} to="/">
+                Services
+              </Grid>
+              <Grid item className={classes.link} component={Link} to="/">
+                Mobile
+              </Grid>
+              <Grid item className={classes.link} component={Link} to="/">
+                Website
+              </Grid>
+              <Grid item className={classes.link} component={Link} to="/">
+                Custom Website
+              </Grid>
+            </Grid>
+          </Grid>
 
-      <footer className={classes.footer}>
-        <Container maxWidth="sm">
-          <Typography variant="body1">TekLinco</Typography>
-          <Copyright />
-        </Container>
-      </footer>
-    </div>
+          {/* Item3 */}
+          <Grid item className={classes.gridItem}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item className={classes.link}>
+                Revolution
+              </Grid>
+              <Grid item className={classes.link}>
+                Process
+              </Grid>
+              <Grid item className={classes.link}>
+                Technology
+              </Grid>
+            </Grid>
+          </Grid>
+          {/* Item4 */}
+          <Grid item className={classes.gridItem}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item className={classes.link}>
+                History
+              </Grid>
+              <Grid item className={classes.link}>
+                About
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {/* Item5 */}
+          <Grid item className={classes.gridItem}>
+            <Grid container direction="column">
+              <Grid item className={classes.link}>
+                Contact us
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Hidden>
+      <img className={classes.adorment} src={footerAdornment} alt="footer" />
+
+      {/* SOCIAL MEDIA ICONS */}
+      <Grid
+        container
+        justify="flex-end"
+        spacing={2}
+        className={classes.socialContainer}>
+        <Grid
+          item
+          component={"a"}
+          href="http://www.facebook.com"
+          rel="noopener noreferrer"
+          target="_blank">
+          <img src={facebook} alt="facebook" className={classes.icon} />
+        </Grid>
+        <Grid item component={"a"} href="http://twitter.com">
+          <img src={twitter} alt="twitter" className={classes.icon} />
+        </Grid>
+        <Grid item component={"a"} href="http://www.instagram.com">
+          <img src={instagram} alt="instagram" className={classes.icon} />
+        </Grid>
+      </Grid>
+    </footer>
   );
 };
 

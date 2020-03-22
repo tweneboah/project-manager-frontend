@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   List,
   ListItem,
@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
+import { connect } from "react-redux";
+import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +34,15 @@ const useStyles = makeStyles((theme) => ({
 const ProjectExpensesListItem = (props) => {
   //CSS
   const classes = useStyles();
-  const { expense } = props;
+  const { expense, user, incomeExpensesProjectCreator } = props;
+  console.log(expense);
+  const userId = expense && expense.user;
+  const author = user && user.username;
+  console.log(user);
+
+  useEffect(() => {
+    incomeExpensesProjectCreator(userId);
+  }, [incomeExpensesProjectCreator]);
   return (
     <List className={classes.root}>
       <Paper>
@@ -52,10 +62,27 @@ const ProjectExpensesListItem = (props) => {
                   color="textPrimary">
                   {expense.description}
                 </Typography>
+                <Divider />
                 {/* Author */}
                 <Typography style={{ color: "#218c74" }}>
-                  Author: Unknown
+                  Author: {author}
                 </Typography>
+                <Divider />
+                {/* Merchant Name */}
+                <Typography style={{ color: "#218c74" }}>
+                  Merchant's name: {expense.merchant_name}
+                </Typography>
+                {/* Merchant's contact */}
+                <Typography style={{ color: "#218c74" }}>
+                  Merchant's name: {expense.merchant_contact}
+                </Typography>
+                <Divider />
+                {/* Amount */}
+                {/* Merchant's contact */}
+                <Typography style={{ color: "#218c74" }}>
+                  Amount GHS: {expense.amount}
+                </Typography>
+                <Divider />
                 <Typography>
                   <Moment style={{ color: "#8c7ae6" }} format="DD/MM/YYYY">
                     {expense.createdAt}
@@ -70,4 +97,13 @@ const ProjectExpensesListItem = (props) => {
   );
 };
 
-export default ProjectExpensesListItem;
+const mapStateToprops = (state) => {
+  return {
+    user: state.userAuth.incomeExpensesProjectCreator
+  };
+};
+
+const actions = {
+  incomeExpensesProjectCreator
+};
+export default connect(mapStateToprops, actions)(ProjectExpensesListItem);

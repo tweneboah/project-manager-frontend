@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { API_URL } from "../../../config/URLs";
 import {
   REGISTER_USER,
@@ -6,7 +7,9 @@ import {
   REGISTER_USER_ERROR,
   LOGIN_USER_ERROR,
   SET_CURRENT_USER,
-  USER_LOGOUT
+  USER_LOGOUT,
+  GET_MY_PROFILE,
+  EXPENSES_PROJECT_INCOME_CREATOR
 } from "../actionTypes/actionTypes";
 
 export const registerUser = (data) => {
@@ -38,6 +41,7 @@ export const registerUser = (data) => {
         type: REGISTER_USER_ERROR,
         payload: "Email is taken/password is below 7 characters"
       });
+      toast.error("Invalid credentials");
     }
   };
 };
@@ -65,7 +69,7 @@ export const loginUser = (data) => {
       });
       localStorage.setItem("user", JSON.stringify(userData));
 
-      console.log(userData);
+      toast.success("Successfully logged in");
     } catch (error) {
       console.log(error);
       dispact({
@@ -78,7 +82,7 @@ export const loginUser = (data) => {
 
 export const setCurrentUser = () => {
   return async (dispatch) => {
-    const userAuth = JSON.parse(localStorage.getItem("user"));
+    const userAuth = await JSON.parse(localStorage.getItem("user"));
     dispatch({
       type: SET_CURRENT_USER,
       payload: userAuth
@@ -92,5 +96,39 @@ export const logout = () => {
     dispatch({
       type: USER_LOGOUT
     });
+  };
+};
+
+export const getMyProfile = (userId) => {
+  return async (dispact) => {
+    try {
+      const userResponse = await axios({
+        method: "GET",
+        url: `${API_URL}/users/${userId}`
+      });
+      dispact({
+        type: GET_MY_PROFILE,
+        payload: userResponse.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const incomeExpensesProjectCreator = (userId) => {
+  return async (dispact) => {
+    try {
+      const userResponse = await axios({
+        method: "GET",
+        url: `${API_URL}/users/${userId}`
+      });
+      dispact({
+        type: EXPENSES_PROJECT_INCOME_CREATOR,
+        payload: userResponse.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

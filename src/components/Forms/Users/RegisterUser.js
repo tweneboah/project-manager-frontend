@@ -6,6 +6,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -58,7 +59,7 @@ const RegisterUser = (props) => {
       password: data.password
     };
     await registerUser(userData);
-    // props.history.push(`/project/income/${projectId}`);
+    props.history.push(`/projects`);
   };
 
   const classes = useStyles();
@@ -155,6 +156,7 @@ const RegisterUser = (props) => {
             className={classes.submit}>
             Register
           </Button>
+          <ToastContainer autoClose={2000} />
         </form>
       </div>
       <Box mt={8}>

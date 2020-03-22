@@ -14,21 +14,31 @@ import CreateProjectForm from "./components/Forms/Projects/CreateProjectForm";
 import Home from "./components/HomePage/Home";
 import RegisterUser from "./components/Forms/Users/RegisterUser";
 import LoginUser from "./components/Forms/Users/LoginUser";
-import { setCurrentUser } from "./redux/actions/users/usersActions";
+import {
+  setCurrentUser,
+  getMyProfile
+} from "./redux/actions/users/usersActions";
 import { connect } from "react-redux";
-import Uploader from "./components/Uploader";
+// import Uploader from "./components/Uploader";
+// import MuiUploader from "./MuiUploader";
+// import DraggableTodos from "./components/DraggableTodos/DraggableTodos";
+import LoadingComponent from "./components/LoadingComponent/LoadingComponent";
 
 const App = (props) => {
-  const { setCurrentUser } = props;
+  const { setCurrentUser, getMyProfile, userAuth } = props;
+  const id = userAuth && userAuth._id;
+
   useEffect(() => {
     setCurrentUser();
-  }, [setCurrentUser]);
+    getMyProfile(id);
+  }, [setCurrentUser, id]);
+
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
         <NavbarDashboard />
         <Switch>
-          <Route exact path="/" component={Uploader} />
+          <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={ProjectLists} />
 
           <Route exact path="/register" component={RegisterUser} />
@@ -70,6 +80,8 @@ const App = (props) => {
             path="/projects/create-expense/:projectId"
             component={CreateExpensesForm}
           />
+
+          {/* <Route exact path="/drag" component={DraggableTodos} /> */}
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
@@ -77,7 +89,13 @@ const App = (props) => {
 };
 
 const actions = {
-  setCurrentUser
+  setCurrentUser,
+  getMyProfile
 };
 
-export default connect(null, actions)(App);
+const mapStateToProps = (state) => {
+  return {
+    userAuth: state.userAuth.currentUser
+  };
+};
+export default connect(mapStateToProps, actions)(App);

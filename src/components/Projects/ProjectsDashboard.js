@@ -11,6 +11,7 @@ import { Button, Grid, Paper } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import FooterComponent from "../Footer/FooterComponent";
+import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -227,4 +228,7 @@ const actions = {
   fetchSingleProject
 };
 
-export default connect(mapStateToProps, actions)(ProjectsDashboard);
+export default connect(
+  mapStateToProps,
+  actions
+)(PrivateRoute(ProjectsDashboard));

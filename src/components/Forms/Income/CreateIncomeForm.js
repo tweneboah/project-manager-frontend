@@ -51,15 +51,18 @@ const useStyles = makeStyles((theme) => ({
 const CreateIncomeForm = (props) => {
   const { projectId } = useParams();
   console.log(props);
-  const { createIncome } = props;
+  const { createIncome, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
+  //Grab the id of the current Logged in User to create the income
+  const id = currentUser && currentUser._id;
 
   const onSubmit = async (data) => {
     const incomeData = {
       title: data.title,
       description: data.description,
       amount: data.amount,
-      project: projectId
+      project: projectId,
+      user: id
     };
     await createIncome(incomeData);
     props.history.push(`/project/income/${projectId}`);
@@ -171,4 +174,10 @@ const CreateIncomeForm = (props) => {
 const actions = {
   createIncome
 };
-export default connect(null, actions)(CreateIncomeForm);
+
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.userAuth.currentUser
+  };
+};
+export default connect(mapStateToProps, actions)(CreateIncomeForm);
