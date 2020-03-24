@@ -35,10 +35,8 @@ const ProjectExpensesListItem = (props) => {
   //CSS
   const classes = useStyles();
   const { expense, user, incomeExpensesProjectCreator } = props;
-  console.log(expense);
   const userId = expense && expense.user;
   const author = user && user.username;
-  console.log(user);
 
   useEffect(() => {
     incomeExpensesProjectCreator(userId);
@@ -57,17 +55,16 @@ const ProjectExpensesListItem = (props) => {
               <React.Fragment>
                 <Typography
                   component="span"
-                  variant="body2"
                   className={classes.inline}
                   color="textPrimary">
                   {expense.description}
                 </Typography>
-                <Divider />
+                {/* <Divider /> */}
                 {/* Author */}
                 <Typography style={{ color: "#218c74" }}>
                   Author: {author}
                 </Typography>
-                <Divider />
+                {/* <Divider /> */}
                 {/* Merchant Name */}
                 <Typography style={{ color: "#218c74" }}>
                   Merchant's name: {expense.merchant_name}
@@ -76,13 +73,13 @@ const ProjectExpensesListItem = (props) => {
                 <Typography style={{ color: "#218c74" }}>
                   Merchant's name: {expense.merchant_contact}
                 </Typography>
-                <Divider />
+                {/* <Divider /> */}
                 {/* Amount */}
                 {/* Merchant's contact */}
                 <Typography style={{ color: "#218c74" }}>
                   Amount GHS: {expense.amount}
                 </Typography>
-                <Divider />
+                {/* <Divider /> */}
                 <Typography>
                   <Moment style={{ color: "#8c7ae6" }} format="DD/MM/YYYY">
                     {expense.createdAt}

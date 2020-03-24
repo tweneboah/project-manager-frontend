@@ -34,8 +34,10 @@ export const registerUser = (data) => {
         type: REGISTER_USER,
         payload: userData
       });
-
+      // We have to return the user from here because we need the created user in our frontentend to create it's profile picture
       localStorage.setItem("user", JSON.stringify(userData));
+      const userForm = userResponse.data;
+      return userForm;
     } catch (error) {
       dispact({
         type: REGISTER_USER_ERROR,

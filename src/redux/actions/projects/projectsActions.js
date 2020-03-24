@@ -12,13 +12,8 @@ import {
 export const fetchAllProjects = () => {
   return async (dispatch) => {
     try {
-      // const projectsResponse = await axios({
-      //   method: "GET",
-      //   url: "https:teklinco-project-manager.herokuapp.com/projects"
-      // });
-
       const projectsResponse = await axios.get(`${API_URL}/projects`);
-      console.log(projectsResponse.data);
+
       dispatch({
         type: FETCH_ALL_PROJECTS,
         payload: projectsResponse.data

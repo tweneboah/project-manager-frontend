@@ -2,8 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/styles";
 import { CssBaseline, Grid, Hidden } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import footerAdornment from "../../images/bg.jpg";
-import facebook from "../../images/bg.jpg";
+import footerAdornment from "../../images/emma.jpg";
+import facebook from "../../images/facebook.png";
 import twitter from "../../images/bg.jpg";
 import instagram from "../../images/bg.jpg";
 
@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => {
       position: "relative"
     },
     adorment: {
-      width: "25em",
+      width: "12em",
+      height: "15em",
       verticalAlign: "bottom",
       [theme.breakpoints.down("md")]: {
         width: "21em"
@@ -130,7 +131,7 @@ const FooterComponent = () => {
         <Grid
           item
           component={"a"}
-          href="http://www.facebook.com"
+          href="https://github.com/tweneboah"
           rel="noopener noreferrer"
           target="_blank">
           <img src={facebook} alt="facebook" className={classes.icon} />

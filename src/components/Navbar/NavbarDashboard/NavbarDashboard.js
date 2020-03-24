@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => {
 
 const NavbarDashboard = (props) => {
   const { currentUser, setCurrentUser } = props;
+  
   useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);

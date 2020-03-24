@@ -7,7 +7,8 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
-
+import axios from "axios";
+import { DropzoneArea } from "material-ui-dropzone";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -18,7 +19,7 @@ import { registerUser } from "../../../redux/actions/users/usersActions";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright Â© "}
+      {"Copyright � "}
       <Link color="inherit" href="https://github.com/tweneboah">
         <span>Tek-Linco Project Manager</span>
       </Link>{" "}
@@ -49,6 +50,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RegisterUser = (props) => {
+  //css
+  const classes = useStyles();
   const { registerUser } = props;
   const { control, handleSubmit, errors } = useForm();
 
@@ -58,11 +61,27 @@ const RegisterUser = (props) => {
       email: data.email,
       password: data.password
     };
-    await registerUser(userData);
+    const user = await registerUser(userData);
+
+    console.log(user.user._id);
+    //Grab the user id from axios
+    const userId = user && user.user._id;
+    //Create profile picture
+    const formData = new FormData();
+    formData.append("files", data.image[0]);
+    //Required by strapi
+    formData.append("source", "users-permissions");
+    formData.append("ref", "user"); //name of content type
+    formData.append("refId", userId); //id of content type
+    formData.append("field", "image"); //name of key for the content type
+    const res = await axios({
+      method: "POST",
+      url: "http://localhost:1337/upload",
+      data: formData
+    });
+    console.log(res);
     props.history.push(`/projects`);
   };
-
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -123,7 +142,23 @@ const RegisterUser = (props) => {
           {errors.email && (
             <span style={{ color: "red" }}>Email is required</span>
           )}
-
+          {/* PROFILE PICTURE */}
+          <Controller
+            as={
+              <DropzoneArea
+                filesLimit={1}
+                acceptedFiles={["image/jpeg", "image/png"]}
+                maxFileSize={1000000}
+              />
+            }
+            control={control}
+            rules={{ required: true }}
+            name="image"
+            type="file"
+          />
+          {errors.image && (
+            <span style={{ color: "red" }}>Profile Picture is required</span>
+          )}
           {/* Description */}
           <Controller
             placeholder="Password"

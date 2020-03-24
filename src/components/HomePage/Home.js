@@ -184,10 +184,10 @@ const Home = () => {
               <Typography
                 style={{ fontFamily: "Bree Serif", fontSize: "2.3rem" }}>
                 Customer Support
-                <Divider
-                  style={{ border: "1px solid white", marginBottom: "10px" }}
-                />
               </Typography>
+              <Divider
+                style={{ border: "1px solid white", marginBottom: "10px" }}
+              />
             </div>
 
             <div>

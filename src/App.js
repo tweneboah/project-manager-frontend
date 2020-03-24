@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import uuid from "uuid/v4";
 import Theme from "./config/Theme";
 import NavbarDashboard from "./components/Navbar/NavbarDashboard/NavbarDashboard";
 import ProjectLists from "./components/Projects/ProjectLists";
@@ -19,10 +21,7 @@ import {
   getMyProfile
 } from "./redux/actions/users/usersActions";
 import { connect } from "react-redux";
-// import Uploader from "./components/Uploader";
-// import MuiUploader from "./MuiUploader";
-// import DraggableTodos from "./components/DraggableTodos/DraggableTodos";
-import LoadingComponent from "./components/LoadingComponent/LoadingComponent";
+import ProjectTodosForm from "./components/Forms/ProjectTodos/ProjectTodosForm";
 
 const App = (props) => {
   const { setCurrentUser, getMyProfile, userAuth } = props;
@@ -31,7 +30,7 @@ const App = (props) => {
   useEffect(() => {
     setCurrentUser();
     getMyProfile(id);
-  }, [setCurrentUser, id]);
+  }, [setCurrentUser, id, getMyProfile]);
 
   return (
     <ThemeProvider theme={Theme}>
@@ -81,7 +80,11 @@ const App = (props) => {
             component={CreateExpensesForm}
           />
 
-          {/* <Route exact path="/drag" component={DraggableTodos} /> */}
+          <Route
+            exact
+            path="/create-todo/:projectId"
+            component={ProjectTodosForm}
+          />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
