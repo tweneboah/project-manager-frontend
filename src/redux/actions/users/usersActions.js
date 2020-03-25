@@ -21,13 +21,18 @@ export const registerUser = (data) => {
         data: data
       });
 
-      //SAVE USER DETAILS INTO LOCALSTORAGE
-      //Grab jwt
-      const { jwt } = userResponse.data;
-      const { _id } = userResponse.data.user;
+      const { jwt } = await userResponse.data;
+      const { _id, username, email, role, projects } = await userResponse.data
+        .user;
+      console.log(userResponse.data);
       const userData = {
         jwt,
-        _id
+        _id,
+        username,
+        email,
+        role,
+
+        projects
       };
 
       dispact({
@@ -35,9 +40,8 @@ export const registerUser = (data) => {
         payload: userData
       });
       // We have to return the user from here because we need the created user in our frontentend to create it's profile picture
-      localStorage.setItem("user", JSON.stringify(userData));
-      const userForm = userResponse.data;
-      return userForm;
+      
+      return userData;
     } catch (error) {
       dispact({
         type: REGISTER_USER_ERROR,
@@ -56,20 +60,15 @@ export const loginUser = (data) => {
         url: `${API_URL}/auth/local`,
         data: data
       });
+
       //SAVE USER DETAILS INTO LOCALSTORAGE
       //Grab jwt
-      const { jwt } = userResponse.data;
-      const { _id } = userResponse.data.user;
-      const userData = {
-        jwt,
-        _id
-      };
 
       dispact({
         type: LOGIN_USER,
-        payload: userData
+        payload: userResponse.data
       });
-      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("user", JSON.stringify(userResponse.data));
 
       toast.success("Successfully logged in");
     } catch (error) {

@@ -63,7 +63,7 @@ const ElevationScroll = (props) => {
   });
 };
 
-const PrivateHeaderDashboard = () => {
+const PrivateHeaderDashboard = ({ userAuthImage, userAuthUsername }) => {
   //Extract classes
   const classes = useStyles();
   //Create an instance of our theme for responsive design
@@ -82,7 +82,17 @@ const PrivateHeaderDashboard = () => {
               className={classes.logoContainer}>
               {<img className={classes.logo} src={logo} alt="logo" />}
             </Button>
-            {matches ? <PrivateNavbarSideDrawer /> : <PrivateNavbarTabs />}
+            {matches ? (
+              <PrivateNavbarSideDrawer
+                userAuthImage={userAuthImage}
+                userAuthUsername={userAuthUsername}
+              />
+            ) : (
+              <PrivateNavbarTabs
+                userAuthImage={userAuthImage}
+                userAuthUsername={userAuthUsername}
+              />
+            )}
           </Toolbar>
         </AppBar>
       </ElevationScroll>

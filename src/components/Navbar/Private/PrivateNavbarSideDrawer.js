@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../../redux/actions/users/usersActions";
 import { API_URL } from "../../../config/URLs";
-
+import avatar from "../../../images/avatar.png";
 //INLINE STYLES
 const useStyles = makeStyles((theme) => ({
   drawerIconContainer: {
@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PrivateNavbarSideDrawer = (props) => {
+  const { userAuthUsername, userAuthImage } = props;
   //Extract classes
   const classes = useStyles();
   //DRAWER
@@ -73,7 +74,7 @@ const PrivateNavbarSideDrawer = (props) => {
             <ListItemText className={classes.drawerItem} disableTypography>
               <img
                 className={classes.profilePicture}
-                src={`${API_URL}/${userUrl}`}
+                src={`${API_URL}/${userAuthImage ? userAuthImage : avatar}`}
               />
             </ListItemText>
           </ListItem>
@@ -96,7 +97,7 @@ const PrivateNavbarSideDrawer = (props) => {
             component={Link}
             to="/projects">
             <ListItemText className={classes.drawerItem} disableTypography>
-              Logged in As {username}
+              Logged in As {userAuthUsername}
             </ListItemText>
           </ListItem>
 
@@ -111,12 +112,11 @@ const PrivateNavbarSideDrawer = (props) => {
             </ListItemText>
           </ListItem>
 
-          <ListItem
-            onClick={logout}
-            divider
-            button
-            className={[classes.drawerItem, classes.drawerButton]}>
-            <ListItemText>Logout</ListItemText>
+          <ListItem onClick={logout} divider button>
+            <ListItemText
+              className={[classes.drawerItem, classes.drawerButton]}>
+              Logout
+            </ListItemText>
           </ListItem>
         </List>
       </SwipeableDrawer>

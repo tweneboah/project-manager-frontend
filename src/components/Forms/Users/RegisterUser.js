@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,7 +14,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { registerUser } from "../../../redux/actions/users/usersActions";
+import {
+  registerUser,
+  setCurrentUser
+} from "../../../redux/actions/users/usersActions";
 
 function Copyright() {
   return (
@@ -52,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 const RegisterUser = (props) => {
   //css
   const classes = useStyles();
-  const { registerUser } = props;
+  const { registerUser, setCurrentUser } = props;
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = async (data) => {
@@ -61,25 +64,46 @@ const RegisterUser = (props) => {
       email: data.email,
       password: data.password
     };
-    const user = await registerUser(userData);
+    const userResponse = await registerUser(userData);
 
+    if (userResponse) {
+      //Create profile picture
+      const formData = new FormData();
+      formData.append("files", data.picture[0]);
+
+      //Required by strapi
+      formData.append("source", "users-permissions");
+      formData.append("ref", "user"); //name of content type
+      formData.append("refId", userResponse._id); //id of content type
+      formData.append("field", "picture"); //name of key for the content
+      const res = await axios({
+        method: "POST",
+        url: "http://localhost:1337/upload",
+        data: formData
+      });
+      //Grab the image created and add it to the object
+      const picture = res.data[0];
+      const { _id, username, email, role, projects, jwt } = userResponse;
+
+      console.log(userResponse.data);
+      const userData = {
+        jwt,
+        _id,
+        username,
+        email,
+        role,
+        picture,
+        projects
+      };
+      console.log("WOOO", userData);
+      console.log("Picture", res.data[0]);
+      console.log("form", userResponse);
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      props.history.push(`/login`);
+    }
+    // const { _id } = userResponse && userResponse.data.user;
     //Grab the user id from axios
-    const userId = user && user.user._id;
-    //Create profile picture
-    const formData = new FormData();
-    formData.append("files", data.image[0]);
-    //Required by strapi
-    formData.append("source", "users-permissions");
-    formData.append("ref", "user"); //name of content type
-    formData.append("refId", userId); //id of content type
-    formData.append("field", "image"); //name of key for the content type
-    await axios({
-      method: "POST",
-      url: "http://localhost:1337/upload",
-      data: formData
-    });
-
-    props.history.push(`/projects`);
   };
 
   return (
@@ -145,17 +169,17 @@ const RegisterUser = (props) => {
           <Controller
             as={
               <DropzoneArea
-                filesLimit={1}
+                filesLimit={0}
                 acceptedFiles={["image/jpeg", "image/png"]}
                 maxFileSize={1000000}
               />
             }
             control={control}
             rules={{ required: true }}
-            name="image"
+            name="picture"
             type="file"
           />
-          {errors.image && (
+          {errors.picture && (
             <span style={{ color: "red" }}>Profile Picture is required</span>
           )}
           {/* Description */}
@@ -201,6 +225,8 @@ const RegisterUser = (props) => {
 };
 
 const actions = {
-  registerUser
+  registerUser,
+  setCurrentUser
 };
+
 export default connect(null, actions)(RegisterUser);

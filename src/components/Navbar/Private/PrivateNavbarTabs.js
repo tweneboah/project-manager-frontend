@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { logout } from "../../../redux/actions/users/usersActions";
 import { connect } from "react-redux";
 import { API_URL } from "../../../config/URLs";
-
+import avatar from "../../../images/avatar.png";
 //INLINE STYLES
 //---------------------------------
 const useStyles = makeStyles((theme) => ({
@@ -53,12 +53,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PrivateNavbarTabs = (props) => {
+  const { userAuthImage, userAuthUsername } = props;
   //Extract classes
   const classes = useStyles();
-  const { logout, userAuth } = props;
+  const { logout, currentUser } = props;
   const [tabsValue, setTabsValue] = useState(0);
-  const username = userAuth && userAuth.username;
-  // const userUrl = userAuth && userAuth.image.url;
+  const username = currentUser && currentUser.username;
+  // const userUrl = currentUser && currentUser.image.url;
 
   //TAB HandleChange
   const tabHandleChange = (event, newValue) => {
@@ -131,15 +132,15 @@ const PrivateNavbarTabs = (props) => {
           label="Revolution"
         /> */}
       </Tabs>
-      <Tab label={`Logged in as ${username}`} className={classes.tab} />
-      {/* <Tab
+      <Tab label={`Logged in as ${userAuthUsername}`} className={classes.tab} />
+      <Tab
         label={
           <img
             className={classes.profilePicture}
-            src={`${API_URL}/${userUrl}`}
+            src={`${API_URL}/${userAuthImage ? userAuthImage : avatar}`}
           />
         }
-      /> */}
+      />
       <Button
         onClick={logout}
         style={{ backgroundColor: "red" }}
@@ -207,7 +208,7 @@ const actions = {
 
 const mapStateToProps = (state) => {
   return {
-    userAuth: state.userAuth.myProfile
+    currentUser: state.userAuth.currentUser
   };
 };
 

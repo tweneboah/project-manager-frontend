@@ -34,7 +34,7 @@ const App = (props) => {
 
   useEffect(() => {
     setCurrentUser();
-    getMyProfile(id);
+    // getMyProfile(id);
   }, [setCurrentUser, id, getMyProfile]);
 
   return (

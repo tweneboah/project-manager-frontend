@@ -16,7 +16,10 @@ import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { loginUser } from "../../../redux/actions/users/usersActions";
+import {
+  loginUser,
+  setCurrentUser
+} from "../../../redux/actions/users/usersActions";
 
 function Copyright() {
   return (
@@ -52,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginUser = (props) => {
-  const { loginUser } = props;
+  const { loginUser, setCurrentUser } = props;
   const { control, handleSubmit, errors } = useForm();
 
   const onSubmit = async (data) => {
@@ -61,6 +64,7 @@ const LoginUser = (props) => {
       password: data.password
     };
     await loginUser(userData);
+    await setCurrentUser();
     props.history.push(`/projects`);
   };
 
@@ -146,6 +150,8 @@ const LoginUser = (props) => {
 };
 
 const actions = {
-  loginUser
+  loginUser,
+  setCurrentUser
 };
+
 export default connect(null, actions)(LoginUser);
