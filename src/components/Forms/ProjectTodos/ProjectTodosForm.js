@@ -15,6 +15,7 @@ import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
 import { createExpenses } from "../../../redux/actions/expenses/expensesActions";
 import { createProjectTodo } from "../../../redux/actions/Todos/projectTodos";
+import { fetchSingleProject } from "../../../redux/actions/projects/projectsActions";
 
 function Copyright() {
   return (
@@ -50,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateprojectTodoForm = (props) => {
-  console.log(props);
   //css
   const classes = useStyles();
   const { projectId } = useParams();
@@ -65,7 +65,8 @@ const CreateprojectTodoForm = (props) => {
       project: projectId
     };
     await createProjectTodo(incomeData, jwt);
-    props.history.push(`/project/dashboard/${projectId}`);
+  
+    props.history.push(`/projects`);
   };
 
   return (
@@ -122,7 +123,8 @@ const CreateprojectTodoForm = (props) => {
 };
 
 const actions = {
-  createProjectTodo
+  createProjectTodo,
+  fetchSingleProject
 };
 
 const mapStateToProps = (state) => {

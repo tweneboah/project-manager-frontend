@@ -2,10 +2,9 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import uuid from "uuid/v4";
+
 import Theme from "./config/Theme";
-import NavbarDashboard from "./components/Navbar/NavbarDashboard/NavbarDashboard";
+
 import ProjectLists from "./components/Projects/ProjectLists";
 import ProjectExpensesList from "./components/Expenses/ProjectExpensesList";
 import ProjectsDashboard from "./components/Projects/ProjectsDashboard";
@@ -22,6 +21,12 @@ import {
 } from "./redux/actions/users/usersActions";
 import { connect } from "react-redux";
 import ProjectTodosForm from "./components/Forms/ProjectTodos/ProjectTodosForm";
+import AboutMe from "./components/Pages/AboutMe";
+import PublicHeaderDashboard from "./components/Navbar/Public/PublicHeaderDashboard";
+import MenuDashboard from "./components/Navbar/MenuDashboard";
+import WhatWeCanDoForYou from "./components/Pages/WhatWeCanDoForYou";
+import CustomeSoftwareDevelopment from "./components/Pages/CustomeSoftwareDevelopment";
+import StudyWithMe from "./components/Pages/StudyWithMe";
 
 const App = (props) => {
   const { setCurrentUser, getMyProfile, userAuth } = props;
@@ -35,7 +40,8 @@ const App = (props) => {
   return (
     <ThemeProvider theme={Theme}>
       <BrowserRouter>
-        <NavbarDashboard />
+        {/* <NavbarDashboard /> */}
+        <MenuDashboard />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/projects" component={ProjectLists} />
@@ -85,6 +91,19 @@ const App = (props) => {
             path="/create-todo/:projectId"
             component={ProjectTodosForm}
           />
+          <Route exact path="/about-me" component={AboutMe} />
+          <Route
+            exact
+            path="/what-this-app-can-do"
+            component={WhatWeCanDoForYou}
+          />
+          <Route
+            exact
+            path="/customsoftware"
+            component={CustomeSoftwareDevelopment}
+          />
+          <Route exact path="/study" component={StudyWithMe} />
+          <Route exact path="/aboutme" component={AboutMe} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => {
       marginBottom: "2px"
     },
     projectDate: {
-      marginTop: "-2px",
+      marginTop: "-3px",
       color: "#ff7979"
     },
     income: {
@@ -81,7 +81,7 @@ const ProjectsDashboard = (props) => {
   //Props
   const { fetchSingleProject, project, profile } = props;
   //Grab image url of the user
-  const url = profile && profile.image[0].url;
+  const url = profile && profile.image.url;
   //Extract Params Id
   const projectId = props.match.params.projectId;
   //UseEffect
@@ -98,7 +98,7 @@ const ProjectsDashboard = (props) => {
       name: "Requested",
       items: itemsFromBackend
         ? itemsFromBackend
-        : [{ id: "533", content: "Loading" }]
+        : [{ id: "533", content: "Refresh the page" }]
     },
     [uuid()]: {
       name: "In Progress",
@@ -418,7 +418,7 @@ const ProjectsDashboard = (props) => {
                                               ...provided.draggableProps.style
                                             }}>
                                             {/* Draggable items */}
-                                            {item.content}
+                                            {itemsFromBackend && item.content}
                                             <div>
                                               <img
                                                 className={

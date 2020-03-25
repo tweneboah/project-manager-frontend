@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => {
       position: "relative"
     },
     adorment: {
-      width: "12em",
+      width: "15em",
       height: "15em",
       verticalAlign: "bottom",
       [theme.breakpoints.down("md")]: {
@@ -131,15 +131,15 @@ const FooterComponent = () => {
         <Grid
           item
           component={"a"}
-          href="https://github.com/tweneboah"
+          href="https://www.facebook.com/affortekghana"
           rel="noopener noreferrer"
           target="_blank">
           <img src={facebook} alt="facebook" className={classes.icon} />
         </Grid>
-        <Grid item component={"a"} href="http://twitter.com">
+        <Grid item component={"a"} href="https://github.com/tweneboah">
           <img src={twitter} alt="twitter" className={classes.icon} />
         </Grid>
-        <Grid item component={"a"} href="http://www.instagram.com">
+        <Grid item component={"a"} href="https://github.com/tweneboah">
           <img src={instagram} alt="instagram" className={classes.icon} />
         </Grid>
       </Grid>

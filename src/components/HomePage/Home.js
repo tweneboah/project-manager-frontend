@@ -16,7 +16,8 @@ const useStyles = makeStyles((theme) => {
       minHeight: "70vh",
       backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bg})`,
       backgroundSize: "cover",
-      backgroundPosition: "center"
+      backgroundPosition: "center",
+      marginTop: "-90px"
     },
     secondContainer: {},
 

@@ -63,7 +63,6 @@ const RegisterUser = (props) => {
     };
     const user = await registerUser(userData);
 
-    console.log(user.user._id);
     //Grab the user id from axios
     const userId = user && user.user._id;
     //Create profile picture
@@ -74,12 +73,12 @@ const RegisterUser = (props) => {
     formData.append("ref", "user"); //name of content type
     formData.append("refId", userId); //id of content type
     formData.append("field", "image"); //name of key for the content type
-    const res = await axios({
+    await axios({
       method: "POST",
       url: "http://localhost:1337/upload",
       data: formData
     });
-    console.log(res);
+
     props.history.push(`/projects`);
   };
 
