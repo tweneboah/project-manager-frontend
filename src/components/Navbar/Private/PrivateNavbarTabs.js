@@ -58,7 +58,7 @@ const PrivateNavbarTabs = (props) => {
   const { logout, userAuth } = props;
   const [tabsValue, setTabsValue] = useState(0);
   const username = userAuth && userAuth.username;
-  const userUrl = userAuth && userAuth.image.url;
+  // const userUrl = userAuth && userAuth.image.url;
 
   //TAB HandleChange
   const tabHandleChange = (event, newValue) => {
@@ -132,14 +132,14 @@ const PrivateNavbarTabs = (props) => {
         /> */}
       </Tabs>
       <Tab label={`Logged in as ${username}`} className={classes.tab} />
-      <Tab
+      {/* <Tab
         label={
           <img
             className={classes.profilePicture}
             src={`${API_URL}/${userUrl}`}
           />
         }
-      />
+      /> */}
       <Button
         onClick={logout}
         style={{ backgroundColor: "red" }}
