@@ -9,8 +9,10 @@ import LoadingComponent from "../LoadingComponent/LoadingComponent";
 const useStyles = makeStyles((theme) => {
   return {
     parentOne: {
-      background: "#218c74",
-      paddingTop: "20px"
+      background: "#591422",
+      marginTop: "-40px",
+      color: "white",
+      paddingTop: "40px"
     },
     parentOneChild: {
       textAlign: "center"
@@ -45,7 +47,7 @@ const ProjectExpensesList = (props) => {
           {/* First Container */}
           <Grid container justify="center" className={classes.parentOne}>
             <Grid item className={classes.parentOneChild}>
-              <h1>
+              <h1 style={{ color: "#bdc3c7" }}>
                 You are adding expenses to {project.singleProject.title} project
               </h1>
               <Button
@@ -54,10 +56,23 @@ const ProjectExpensesList = (props) => {
                 onClick={goToCreateExpensePage}>
                 Add Expenses
               </Button>
+              <Grid>
+                <Button
+                  style={{ marginTop: "20px" }}
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() =>
+                    props.history.push(`/project/dashboard/${projectId}`)
+                  }>
+                  Go to Dashboard
+                </Button>
+              </Grid>
             </Grid>
             {/* Child 1 */}
             <Grid item className={classes.parentOneChild2}>
-              <p>{project.singleProject.description}</p>
+              <p style={{ color: "#bdc3c7", lineHeight: "1.4rem" }}>
+                {project.singleProject.description}
+              </p>
             </Grid>
           </Grid>
 

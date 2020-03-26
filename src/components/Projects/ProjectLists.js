@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import ProjectListItem from "./ProjectListItem";
 import { connect } from "react-redux";
-import { fetchAllProjects } from "../../redux/actions/projects/projectsActions";
+import {
+  fetchAllProjects,
+  fetchProjectByUserCode
+} from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import StoreIcon from "@material-ui/icons/Store";
 import { Button, Grid } from "@material-ui/core";
@@ -12,7 +15,9 @@ import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 const useStyles = makeStyles((theme) => {
   return {
     parentOne: {
-      background: "#3c6382"
+      background: "#196362",
+      marginTop: "-40px",
+      paddingTop: "40px"
     },
     icon: {
       marginTop: "30px",
@@ -39,17 +44,31 @@ const ProjectLists = (props) => {
   //Css
   const classes = useStyles();
   //Props
-  const { fetchAllProjects, projects, fetchAllExpenses } = props;
+  const {
+    fetchAllProjects,
+    projects,
+    fetchAllExpenses,
+    fetchProjectByUserCode,
+    currentUser
+  } = props;
   //UseEffect
+  const userCode = currentUser && currentUser.code;
+  console.log(userCode);
 
   useEffect(() => {
     fetchAllProjects();
-  }, [fetchAllProjects, fetchAllExpenses]);
+    fetchProjectByUserCode(userCode);
+  }, [fetchAllProjects, fetchAllExpenses, userCode]);
 
   // Go to Add project page
   const goToCreateProject = () => {
     props.history.push("/projects/create-project");
   };
+
+  if (!currentUser) {
+    return <LoadingComponent />;
+  }
+  console.log(props);
   return (
     <div>
       {projects.projects === [] ? (
@@ -61,16 +80,23 @@ const ProjectLists = (props) => {
             container
             direction="column"
             alignItems="center"
+            justify="center"
             className={classes.parentOne}>
             <Grid item>
               <div className={classes.parentOneChild}>
                 <StoreIcon color="primary" className={classes.icon} />
-                <h1>Your Projects</h1>
+                <h1 style={{ color: "#b2bec3" }}>Your Projects</h1>
 
                 <hr />
                 <Button
                   variant="outlined"
                   color="primary"
+                  style={{
+                    border: "1px solid yellow",
+                    marginTop: 20,
+                    marginBottom: 20,
+                    color: "#b2bec3"
+                  }}
                   onClick={goToCreateProject}>
                   Add Project
                 </Button>
@@ -82,7 +108,7 @@ const ProjectLists = (props) => {
           <Grid
             container
             direction="row"
-            justify="space-between"
+            justify="center"
             className={classes.parentTwo}>
             {projects.projects.map((project) => {
               return (
@@ -105,13 +131,13 @@ const ProjectLists = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    projects: state.projects
+    projects: state.projects,
+    currentUser: state.userAuth.currentUser
   };
 };
 const actions = {
-  fetchAllProjects
+  fetchAllProjects,
+  fetchProjectByUserCode
 };
 
-export default withRouter(
-  connect(mapStateToProps, actions)(PrivateRoute(ProjectLists))
-);
+export default withRouter(connect(mapStateToProps, actions)(ProjectLists));

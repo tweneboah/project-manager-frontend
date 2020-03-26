@@ -74,7 +74,8 @@ export const loginUser = (data) => {
         project_todos,
         picture,
         createdAt,
-        updatedAt
+        updatedAt,
+        code
       } = userResponse.data.user;
 
       const userData = {
@@ -85,6 +86,7 @@ export const loginUser = (data) => {
         role,
         projects,
         income,
+        code,
         expenses,
         project_todos,
         picture,

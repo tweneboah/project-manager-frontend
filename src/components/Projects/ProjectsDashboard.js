@@ -45,11 +45,12 @@ const useStyles = makeStyles((theme) => {
       marginTop: "30px"
     },
     projectBg: {
-      background: "#535c68",
+      marginTop: "-40px",
+      background: "#2d3436",
       color: "#95afc0"
     },
     projectTitle: {
-      fontSize: "1.7rem",
+      fontSize: "2.7rem",
       paddingTop: "10px",
       marginBottom: "2px"
     },
@@ -79,9 +80,11 @@ const useStyles = makeStyles((theme) => {
 
 const ProjectsDashboard = (props) => {
   //Props
-  const { fetchSingleProject, project, profile } = props;
+  const { fetchSingleProject, project, currentUser } = props;
   //Grab image url of the user
-  const url = profile && profile.image.url;
+  const url = currentUser && currentUser.picture.url;
+  const createdBy = currentUser && currentUser.username;
+  const createdAt = currentUser && currentUser.createdAt;
   //Extract Params Id
   const projectId = props.match.params.projectId;
   //UseEffect
@@ -188,7 +191,6 @@ const ProjectsDashboard = (props) => {
 
   const moneyLeftPercentage = (moneyLeft / totalIncome) * 100;
   const expensesInPercentage = (totalExpenses / totalIncome) * 100;
-  console.log(expensesInPercentage);
 
   //Data for the chart
   const data = [
@@ -236,7 +238,7 @@ const ProjectsDashboard = (props) => {
         </Grid>
         <Grid item>
           <Button
-            variant="contained"
+            variant="outlined"
             color="inherit"
             onClick={goToCreateProjectTodoPage}>
             Add Todo
@@ -343,18 +345,18 @@ const ProjectsDashboard = (props) => {
           <Grid
             item
             style={{
-              backgroundColor: "#F39C9E"
+              backgroundColor: "##2d3436"
             }}>
             {/* Draggable */}
             <Grid item>
-              <h2 style={{ textAlign: "center" }}>
+              <h2 style={{ textAlign: "center", color: "#dfe6e9" }}>
                 Drag your todos to arrange
               </h2>
             </Grid>
             <Grid item style={{ textAlign: "center", marginBottom: "10px" }}>
               <Button
-                variant="contained"
-                style={{ color: "#dfe6e9", background: "#d63031" }}
+                variant="outlined"
+                style={{ color: "#dfe6e9", border: "1px solid white" }}
                 onClick={goToCreateProjectTodoPage}>
                 Add Todo
               </Button>
@@ -374,7 +376,8 @@ const ProjectsDashboard = (props) => {
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "center",
-                        background: "#035449"
+                        background: "#035449",
+                        minHeight: "100em"
                       }}
                       key={columnId}>
                       <h2 style={{ color: "#81ecec" }}>{column.name}</h2>
@@ -428,6 +431,12 @@ const ProjectsDashboard = (props) => {
                                                 src={`${API_URL}/${url}`}
                                               />
                                             </div>
+                                            <div>created By: {createdBy}</div>
+                                            <div>
+                                              <Moment fromNow>
+                                                {createdAt}
+                                              </Moment>
+                                            </div>
                                           </div>
                                         );
                                       }}
@@ -452,9 +461,9 @@ const ProjectsDashboard = (props) => {
               width: "30rem",
               marginTop: "30px"
             }}>
-            <h1 style={{ textAlign: "center", color: "#81ecec" }}>
-              Project Description
-            </h1>
+            <h2 style={{ textAlign: "center", color: "#81ecec" }}>
+              Graphical view of your expenses and money invested
+            </h2>
             <ResponsiveContainer>
               <AreaChart
                 data={data}
@@ -489,7 +498,7 @@ const ProjectsDashboard = (props) => {
 const mapStateToProps = (state) => {
   return {
     project: state.projects.singleProject,
-    profile: state.userAuth.myProfile
+    currentUser: state.userAuth.currentUser
   };
 };
 const actions = {

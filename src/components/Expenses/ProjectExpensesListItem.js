@@ -13,12 +13,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
+import { API_URL } from "../../config/URLs";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    margin: "20px"
+    margin: "10px"
   },
   inline: {
     display: "inline",
@@ -28,10 +29,15 @@ const useStyles = makeStyles((theme) => ({
   title: {
     color: "red",
     fontWeight: "bold"
+  },
+  receiptImage: {
+    width: "20%",
+    height: "10%"
   }
 }));
 
 const ProjectExpensesListItem = (props) => {
+  console.log(props);
   //CSS
   const classes = useStyles();
   const { expense, user, incomeExpensesProjectCreator } = props;
@@ -59,6 +65,17 @@ const ProjectExpensesListItem = (props) => {
                   color="textPrimary">
                   {expense.description}
                 </Typography>
+                <div>
+                  <img
+                    className={classes.receiptImage}
+                    alt="There is no receipt for this expense"
+                    src={`${API_URL}/${
+                      expense.receipt
+                        ? expense.receipt.url
+                        : "There is no receipt for this expense"
+                    }`}
+                  />
+                </div>
                 {/* <Divider /> */}
                 {/* Author */}
                 <Typography style={{ color: "#218c74" }}>
@@ -71,7 +88,7 @@ const ProjectExpensesListItem = (props) => {
                 </Typography>
                 {/* Merchant's contact */}
                 <Typography style={{ color: "#218c74" }}>
-                  Merchant's name: {expense.merchant_contact}
+                  Merchant's Contact: {expense.merchant_contact}
                 </Typography>
                 {/* <Divider /> */}
                 {/* Amount */}
@@ -85,6 +102,8 @@ const ProjectExpensesListItem = (props) => {
                     {expense.createdAt}
                   </Moment>
                 </Typography>
+
+                <Typography>Confirmed ? {expense.confirm}</Typography>
               </React.Fragment>
             }
           />

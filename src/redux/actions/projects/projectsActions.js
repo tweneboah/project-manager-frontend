@@ -6,7 +6,8 @@ import {
   FETCH_ALL_PROJECTS,
   FETCH_ALL_PROJECTS_ERRORS,
   FETCH_SINGLE_PROJECT,
-  CREATE_PROJECT
+  CREATE_PROJECT,
+  FETCH_PROJECT_BY_USER_CODE
 } from "../actionTypes/actionTypes";
 
 export const fetchAllProjects = () => {
@@ -27,6 +28,23 @@ export const fetchAllProjects = () => {
   };
 };
 
+export const fetchProjectByUserCode = (userCode) => {
+  return async (dispatch) => {
+    try {
+      const projectsResponse = await axios({
+        method: "GET",
+        url: `${API_URL}/projects/?user.code=${userCode}`
+      });
+
+      dispatch({
+        type: FETCH_PROJECT_BY_USER_CODE,
+        payload: projectsResponse.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 export const fetchSingleProject = (projectId) => {
   return async (dispatch) => {
     try {

@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { API_URL } from "../../../config/URLs";
 import avatar from "../../../images/avatar.png";
 import LoadingComponent from "../../LoadingComponent/LoadingComponent";
+import { withRouter } from "react-router-dom";
 //INLINE STYLES
 //---------------------------------
 const useStyles = makeStyles((theme) => ({
@@ -66,7 +67,6 @@ const PrivateNavbarTabs = (props) => {
   //hooks for the tab
   const [value, setValue] = useState(0);
   // const userUrl = currentUser && currentUser.image.url;
-  console.log(currentUser);
 
   //Determine the selected tab when the page refreshes
   useEffect(() => {
@@ -111,6 +111,11 @@ const PrivateNavbarTabs = (props) => {
   if (!currentUser.picture) {
     return <LoadingComponent />;
   }
+
+  const logoutUser = () => {
+    logout();
+    props.history.push("/");
+  };
   return (
     <React.Fragment>
       <Tabs
@@ -148,8 +153,8 @@ const PrivateNavbarTabs = (props) => {
         }
       />
       <Button
-        onClick={logout}
-        style={{ backgroundColor: "red" }}
+        onClick={logoutUser}
+        style={{ backgroundColor: "#591422" }}
         className={classes.button}
         variant="contained"
         color="secondary">
@@ -222,4 +227,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, actions)(PrivateNavbarTabs);
+export default connect(mapStateToProps, actions)(withRouter(PrivateNavbarTabs));

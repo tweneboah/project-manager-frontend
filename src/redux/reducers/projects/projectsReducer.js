@@ -4,7 +4,9 @@ import {
   FETCH_SINGLE_PROJECT,
   CREATE_PROJECT,
   CREATE_INCOME,
-  CREATE_EXPENSE
+  CREATE_EXPENSE,
+  FETCH_PROJECT_BY_USER_CODE,
+  CREATE_PROJECT_TODOS
 } from "../../actions/actionTypes/actionTypes";
 
 const INITIAL_STATE = {
@@ -15,7 +17,8 @@ const INITIAL_STATE = {
 
 const projectsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_ALL_PROJECTS:
+    case FETCH_PROJECT_BY_USER_CODE:
+    case CREATE_PROJECT_TODOS:
       return {
         ...state,
         projects: [...action.payload]
@@ -27,6 +30,7 @@ const projectsReducer = (state = INITIAL_STATE, action) => {
         fetchErrors: action.payload
       };
     case FETCH_SINGLE_PROJECT:
+    case CREATE_PROJECT_TODOS:
       return {
         ...state,
         singleProject: action.payload

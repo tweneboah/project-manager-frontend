@@ -12,7 +12,7 @@ const MenuDashboard = (props) => {
   const { currentUser, setCurrentUser } = props;
   const userAuth = currentUser && currentUser;
   const userAuthImage = currentUser && currentUser.picture;
-  console.log(currentUser);
+ 
   useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);

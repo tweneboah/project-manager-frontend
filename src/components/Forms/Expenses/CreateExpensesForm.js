@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
+import { DropzoneArea } from "material-ui-dropzone";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -56,7 +57,7 @@ const CreateExpensesForm = (props) => {
   const { createExpenses, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
   const jwt = currentUser && currentUser.jwt;
-  const id = currentUser && currentUser._id;
+  const id = currentUser && currentUser.id;
 
   const onSubmit = async (data) => {
     const incomeData = {
@@ -66,10 +67,12 @@ const CreateExpensesForm = (props) => {
       project: projectId,
       merchant_contact: data.merchant_contact,
       merchant_name: data.merchant_name,
-      user: id
+      user: id,
+      receiptPicture: data.receiptPicture
     };
     await createExpenses(incomeData, jwt);
     props.history.push(`/project/expenses/${projectId}`);
+    console.log(incomeData);
   };
 
   return (
@@ -194,6 +197,21 @@ const CreateExpensesForm = (props) => {
             control={control}
             defaultValue=""
           />
+          {/* Receipt Image */}
+          <Controller
+            as={
+              <DropzoneArea
+                filesLimit={0}
+                acceptedFiles={["image/jpeg", "image/png"]}
+                maxFileSize={1000000}
+              />
+            }
+            control={control}
+            rules={{ required: true }}
+            name="receiptPicture"
+            type="file"
+          />
+
           <Button
             type="submit"
             fullWidth

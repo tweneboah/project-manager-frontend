@@ -9,8 +9,9 @@ import { Button, Grid, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return {
     parentOne: {
-      background: "#218c74",
-      paddingTop: "20px"
+      background: "#34495e",
+      paddingTop: "20px",
+      marginTop: "-40px"
     },
     parentOneChild: {
       textAlign: "center"
@@ -37,46 +38,6 @@ const ProjectIncomeList = (props) => {
     props.history.push(`/projects/create-income/${projectId}`);
   };
   return (
-    // <React.Fragment>
-    //   {project === null ? (
-    //     <LoadingComponent />
-    //   ) : (
-    //     <React.Fragment>
-    //       {/* Grid for project details */}
-    //       <Grid container direction="row" justify="center">
-    //         <Grid>
-    //           <h1>Income Dashboard</h1>
-    //           <Button
-    //             variant="contained"
-    //             color="primary"
-    //             onClick={goToCreateIncomePge}>
-    //             Add Income
-    //           </Button>
-    //         </Grid>
-
-    //         <Grid>
-    //           <h1>{project.title}</h1>
-    //           <p>{project.description}</p>
-    //         </Grid>
-    //       </Grid>
-    //       {/* Grid for income List */}
-    //       <Grid
-    //         container
-    //         direction="row"
-    //         justify="center"
-    //         style={{ background: "pink" }}>
-    //         {project.incomes.map((pr) => {
-    //           return (
-    //             <Grid item style={{ background: "pink", margin: "5px" }}>
-    //               <Trying />
-    //             </Grid>
-    //           );
-    //         })}
-    //       </Grid>
-    //     </React.Fragment>
-    //   )}
-    // </React.Fragment>
-
     <React.Fragment>
       {project === null ? (
         <LoadingComponent />
@@ -94,6 +55,17 @@ const ProjectIncomeList = (props) => {
                     onClick={goToCreateIncomePge}>
                     Add Income
                   </Button>
+                  <Grid>
+                    <Button
+                      style={{ marginTop: "20px" }}
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() =>
+                        props.history.push(`/project/dashboard/${projectId}`)
+                      }>
+                      Go to Dashboard
+                    </Button>
+                  </Grid>
                 </Grid>
               </h1>
             </Grid>
