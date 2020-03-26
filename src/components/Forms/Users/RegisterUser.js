@@ -18,7 +18,7 @@ import {
   registerUser,
   setCurrentUser
 } from "../../../redux/actions/users/usersActions";
-
+import { API_URL } from "../../../config/URLs";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -79,7 +79,7 @@ const RegisterUser = (props) => {
       formData.append("field", "picture"); //name of key for the content
       const res = await axios({
         method: "POST",
-        url: "http://localhost:1337/upload",
+        url: `${API_URL}/upload`,
         data: formData
       });
       //Grab the image created and add it to the object
