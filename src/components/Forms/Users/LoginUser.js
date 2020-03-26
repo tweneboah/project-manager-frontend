@@ -71,81 +71,90 @@ const LoginUser = (props) => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            placeholder="Username"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="identifier"
-                label="Username"
-                name="identifier"
-                autoComplete="text"
-                autoFocus
-              />
-            }
-            name="identifier"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.identifier && (
-            <span style={{ color: "red" }}>Username is required</span>
-          )}
-
-          {/* Password */}
-          <Controller
-            placeholder="Password"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="password"
-                label="Password"
-                name="password"
-                type="password"
-                autoFocus
-              />
-            }
-            name="password"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.password && (
-            <span style={{ color: "red" }}>Password is required</span>
-          )}
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}>
+    <div
+      style={{
+        background: "#b2bec3",
+        marginTop: "-70px",
+        paddingTop: "20px",
+        minHeight: "98vh"
+      }}>
+      >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Login
-          </Button>
-          <ToastContainer autoClose={2000} />
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </Typography>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              placeholder="Username"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="identifier"
+                  label="Username"
+                  name="identifier"
+                  autoComplete="text"
+                  autoFocus
+                />
+              }
+              name="identifier"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.identifier && (
+              <span style={{ color: "red" }}>Username is required</span>
+            )}
+
+            {/* Password */}
+            <Controller
+              placeholder="Password"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  autoFocus
+                />
+              }
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.password && (
+              <span style={{ color: "red" }}>Password is required</span>
+            )}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}>
+              Login
+            </Button>
+            <ToastContainer autoClose={2000} />
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </div>
   );
 };
 

@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => {
       textAlign: "center"
     },
     parentTwo: {
-      background: "#60a3bc"
+      background: "#196362",
+      minHeight: "55vh"
     },
     parentTwoChild: {
       margin: "10px",
@@ -44,35 +45,53 @@ const ProjectLists = (props) => {
   //Css
   const classes = useStyles();
   //Props
-  const {
-    fetchAllProjects,
-    projects,
-    fetchAllExpenses,
-    fetchProjectByUserCode,
-    currentUser
-  } = props;
-  //UseEffect
-  const userCode = currentUser && currentUser.code;
-  console.log(userCode);
+  const { fetchAllProjects, projects, fetchAllExpenses } = props;
 
   useEffect(() => {
     fetchAllProjects();
-    fetchProjectByUserCode(userCode);
-  }, [fetchAllProjects, fetchAllExpenses, userCode]);
-
+  }, [fetchAllProjects, fetchAllExpenses]);
+  console.log(props);
   // Go to Add project page
   const goToCreateProject = () => {
     props.history.push("/projects/create-project");
   };
 
-  if (!currentUser) {
-    return <LoadingComponent />;
-  }
+  // if (!currentUser) {
+  //   return <LoadingComponent />;
+  // }
   console.log(props);
   return (
-    <div>
-      {projects.projects === [] ? (
-        <LoadingComponent />
+    <div style={{ marginTop: "-50px" }}>
+      {projects.projects.length <= 0 ? (
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justify="center"
+          className={classes.parentOne}>
+          <Grid item>
+            <div className={classes.parentOneChild}>
+              <StoreIcon color="primary" className={classes.icon} />
+              <h1 style={{ color: "#b2bec3" }}>
+                Your don't have any Projects. Create one
+              </h1>
+
+              <hr />
+              <Button
+                variant="outlined"
+                color="primary"
+                style={{
+                  border: "1px solid yellow",
+                  marginTop: 20,
+                  marginBottom: 20,
+                  color: "#b2bec3"
+                }}
+                onClick={goToCreateProject}>
+                Add Project
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
       ) : (
         <React.Fragment>
           {/* First Container */}
@@ -85,7 +104,9 @@ const ProjectLists = (props) => {
             <Grid item>
               <div className={classes.parentOneChild}>
                 <StoreIcon color="primary" className={classes.icon} />
-                <h1 style={{ color: "#b2bec3" }}>Your Projects</h1>
+                <h1 style={{ color: "#b2bec3" }}>
+                  Your total Projects is {projects.projects.length}
+                </h1>
 
                 <hr />
                 <Button
@@ -131,13 +152,11 @@ const ProjectLists = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    projects: state.projects,
-    currentUser: state.userAuth.currentUser
+    projects: state.projects
   };
 };
 const actions = {
-  fetchAllProjects,
-  fetchProjectByUserCode
+  fetchAllProjects
 };
 
 export default withRouter(connect(mapStateToProps, actions)(ProjectLists));

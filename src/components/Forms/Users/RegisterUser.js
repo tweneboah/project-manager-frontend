@@ -49,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2)
+  },
+  bg: {
+    background: "#b2bec3",
+    height: "-90px"
   }
 }));
 
@@ -122,120 +126,124 @@ const RegisterUser = (props) => {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            placeholder="Username"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="text"
-                autoFocus
-              />
-            }
-            name="username"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.username && (
-            <span style={{ color: "red" }}>Username is required</span>
-          )}
-          {/* Description */}
-          <Controller
-            placeholder="Email"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="email"
-                label="email"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-            }
-            name="email"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.email && (
-            <span style={{ color: "red" }}>Email is required</span>
-          )}
-          {/* PROFILE PICTURE */}
-          <Controller
-            as={
-              <DropzoneArea
-                filesLimit={0}
-                acceptedFiles={["image/jpeg", "image/png"]}
-                maxFileSize={1000000}
-              />
-            }
-            control={control}
-            rules={{ required: true }}
-            name="picture"
-            type="file"
-          />
-          {errors.picture && (
-            <span style={{ color: "red" }}>Profile Picture is required</span>
-          )}
-          {/* Description */}
-          <Controller
-            placeholder="Password"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="password"
-                label="Password"
-                name="password"
-                type="password"
-                autoFocus
-              />
-            }
-            name="password"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.password && (
-            <span style={{ color: "red" }}>Password is required</span>
-          )}
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}>
+    <div
+      style={{ background: "#b2bec3", marginTop: "-70px", paddingTop: "20px" }}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Register
-          </Button>
-          <ToastContainer autoClose={2000} />
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </Typography>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              placeholder="Username"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  autoComplete="text"
+                  autoFocus
+                />
+              }
+              name="username"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.username && (
+              <span style={{ color: "red" }}>Username is required</span>
+            )}
+            {/* Description */}
+            <Controller
+              placeholder="Email"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="email"
+                  label="email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                />
+              }
+              name="email"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.email && (
+              <span style={{ color: "red" }}>Email is required</span>
+            )}
+            {/* PROFILE PICTURE */}
+            <Controller
+              as={
+                <DropzoneArea
+                  dropzoneClass={classes.bg}
+                  filesLimit={0}
+                  acceptedFiles={["image/jpeg", "image/png"]}
+                  maxFileSize={1000000}
+                />
+              }
+              control={control}
+              rules={{ required: true }}
+              name="picture"
+              type="file"
+            />
+            {errors.picture && (
+              <span style={{ color: "red" }}>Profile Picture is required</span>
+            )}
+            {/* Description */}
+            <Controller
+              placeholder="Password"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="password"
+                  label="Password"
+                  name="password"
+                  type="password"
+                  autoFocus
+                />
+              }
+              name="password"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.password && (
+              <span style={{ color: "red" }}>Password is required</span>
+            )}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}>
+              Register
+            </Button>
+            <ToastContainer autoClose={2000} />
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </div>
   );
 };
 

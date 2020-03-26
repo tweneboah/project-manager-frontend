@@ -10,7 +10,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 
 //custom imports
-// import logo from "../../assets/logo.svg";
+import logo from "../../../images/TekLINCO.png";
 import NavbarTabs from "./PublicNavbarTabs";
 import PublicNavbarSideDrawer from "../../Navbar/Public/PublicNavbarSideDrawer";
 import PublicNavbarTabs from "../Public/PublicNavbarTabs";
@@ -44,6 +44,15 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     "&:hover": {
       background: "transparent"
+    }
+  },
+  logo: {
+    height: "4rem",
+    [theme.breakpoints.down("md")]: {
+      height: "5rem"
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "4rem"
     }
   }
 }));
@@ -80,8 +89,7 @@ const PublicHeaderDashboard = () => {
               component={Link}
               to="/"
               className={classes.logoContainer}>
-              {/* <img className={classes.logo} src={logo} alt="logo" /> */}
-              Projector
+              <img className={classes.logo} src={logo} alt="logo" />
             </Button>
             {matches ? <PublicNavbarSideDrawer /> : <PublicNavbarTabs />}
           </Toolbar>

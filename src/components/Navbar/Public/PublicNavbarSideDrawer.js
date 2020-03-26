@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   drawerButton: {
     background: "#d63031",
     padding: "10px"
-  }
+  },
+  
 }));
 
 const PublicNavbarSideDrawer = () => {
@@ -82,41 +83,31 @@ const PublicNavbarSideDrawer = () => {
             divider
             button
             component={Link}
-            to="/mobile">
-            <ListItemText className={classes.drawerItem} disableTypography>
-              Mobile
-            </ListItemText>
-          </ListItem>
-
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to="/website">
-            <ListItemText className={classes.drawerItem} disableTypography>
-              Website
-            </ListItemText>
-          </ListItem>
-
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to="/revolution">
-            <ListItemText className={classes.drawerItem} disableTypography>
-              Revolution
-            </ListItemText>
-          </ListItem>
-          <ListItem
-            onClick={() => setOpenDrawer(false)}
-            divider
-            button
-            component={Link}
-            to="/about">
+            to="/aboutme">
             <ListItemText className={classes.drawerItem} disableTypography>
               About
+            </ListItemText>
+          </ListItem>
+
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/register">
+            <ListItemText className={classes.drawerItem} disableTypography>
+              Register
+            </ListItemText>
+          </ListItem>
+
+          <ListItem
+            onClick={() => setOpenDrawer(false)}
+            divider
+            button
+            component={Link}
+            to="/login">
+            <ListItemText className={classes.drawerItem} disableTypography>
+              Login
             </ListItemText>
           </ListItem>
           <ListItem
@@ -137,7 +128,7 @@ const PublicNavbarSideDrawer = () => {
             className={[classes.drawerItem, classes.drawerButton]}
             component={Link}
             to="/contact">
-            <ListItemText>Free Estimate</ListItemText>
+            <ListItemText>Free Try</ListItemText>
           </ListItem>
         </List>
       </SwipeableDrawer>

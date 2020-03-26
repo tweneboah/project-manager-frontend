@@ -48,16 +48,25 @@ const ProjectIncomeList = (props) => {
             <Grid item className={classes.parentOneChild}>
               <h1>
                 <Grid>
-                  <h1>You are adding expenses to {project.title} project</h1>
+                  <h1 style={{ color: "#dcdde1", fontSize: "2.5rem" }}>
+                    You are adding expenses to {project.title} project
+                  </h1>
                   <Button
                     variant="contained"
                     color="primary"
+                    style={{ padding: "10px", fontSize: "1rem" }}
                     onClick={goToCreateIncomePge}>
                     Add Income
                   </Button>
                   <Grid>
                     <Button
-                      style={{ marginTop: "20px" }}
+                      style={{
+                        padding: "10px",
+                        fontSize: "1rem",
+                        marginTop: "20px",
+                        border: "1px solid yellow",
+                        color: "white"
+                      }}
                       variant="outlined"
                       color="secondary"
                       onClick={() =>
@@ -76,15 +85,9 @@ const ProjectIncomeList = (props) => {
           </Grid>
 
           {project.incomes.length <= 0 ? (
-            <React.Fragment>
-              <h1>No Income</h1>
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={goToCreateIncomePge}>
-                Add Income
-              </Button>
-            </React.Fragment>
+            <div style={{ textAlign: "center" }}>
+              <h1>No Income Create one</h1>
+            </div>
           ) : (
             // Second Container
             <Grid container direction="column" justify="center">

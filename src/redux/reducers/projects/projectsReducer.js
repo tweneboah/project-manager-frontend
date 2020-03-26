@@ -5,7 +5,6 @@ import {
   CREATE_PROJECT,
   CREATE_INCOME,
   CREATE_EXPENSE,
-  FETCH_PROJECT_BY_USER_CODE,
   CREATE_PROJECT_TODOS
 } from "../../actions/actionTypes/actionTypes";
 
@@ -17,7 +16,7 @@ const INITIAL_STATE = {
 
 const projectsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FETCH_PROJECT_BY_USER_CODE:
+    case FETCH_ALL_PROJECTS:
     case CREATE_PROJECT_TODOS:
       return {
         ...state,

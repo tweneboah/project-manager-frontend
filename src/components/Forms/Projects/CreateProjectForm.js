@@ -71,100 +71,102 @@ const CreateProjectForm = (props) => {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Create Project
-        </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            placeholder="Project Title"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="title"
-                label="Project Title"
-                name="title"
-                autoComplete="text"
-                autoFocus
-              />
-            }
-            defaultValue=""
-            name="title"
-            control={control}
-            rules={{ required: true }}
-          />
-          {errors.title && (
-            <span style={{ color: "red" }}>Project Title is required</span>
-          )}
-          {/* Description */}
-          <Controller
-            placeholder="Description"
-            as={
-              <TextField
-                variant="outlined"
-                margin="normal"
-                fullWidth
-                id="description"
-                label="Description"
-                name="description"
-                autoComplete="text"
-                autoFocus
-              />
-            }
-            name="description"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.title && (
-            <span style={{ color: "red" }}>Description is required</span>
-          )}
-
-          {/* Category */}
-          <Controller
-            placeholder="Project Title"
-            as={
-              <Select
-                fullWidth
-                variant="outlined"
-                style={{ marginTop: "10px" }}>
-                <MenuItem value="education">Education</MenuItem>
-                <MenuItem value="estate">Estate</MenuItem>
-                <MenuItem value="business">Business</MenuItem>
-                <MenuItem value="other">Other</MenuItem>
-              </Select>
-            }
-            name="category"
-            control={control}
-            defaultValue=""
-            rules={{ required: true }}
-          />
-          {errors.category && "Your input is required"}
-
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="secondary"
-            className={classes.submit}>
+    <div style={{ background: "#f1f2f6", marginTop: "-50px", height: "90vh" }}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Create Project
-          </Button>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
-      </Box>
-    </Container>
+          </Typography>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}>
+            <Controller
+              placeholder="Project Title"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="title"
+                  label="Project Title"
+                  name="title"
+                  autoComplete="text"
+                  autoFocus
+                />
+              }
+              defaultValue=""
+              name="title"
+              control={control}
+              rules={{ required: true }}
+            />
+            {errors.title && (
+              <span style={{ color: "red" }}>Project Title is required</span>
+            )}
+            {/* Description */}
+            <Controller
+              placeholder="Description"
+              as={
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="description"
+                  label="Description"
+                  name="description"
+                  autoComplete="text"
+                  autoFocus
+                />
+              }
+              name="description"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.title && (
+              <span style={{ color: "red" }}>Description is required</span>
+            )}
+
+            {/* Category */}
+            <Controller
+              placeholder="Project Title"
+              as={
+                <Select
+                  fullWidth
+                  variant="outlined"
+                  style={{ marginTop: "10px" }}>
+                  <MenuItem value="education">Education</MenuItem>
+                  <MenuItem value="estate">Estate</MenuItem>
+                  <MenuItem value="business">Business</MenuItem>
+                  <MenuItem value="other">Other</MenuItem>
+                </Select>
+              }
+              name="category"
+              control={control}
+              defaultValue=""
+              rules={{ required: true }}
+            />
+            {errors.category && "Your input is required"}
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="secondary"
+              className={classes.submit}>
+              Create Project
+            </Button>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
+    </div>
   );
 };
 
