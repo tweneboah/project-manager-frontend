@@ -6,6 +6,7 @@ import { logout } from "../../../redux/actions/users/usersActions";
 import { connect } from "react-redux";
 import { API_URL } from "../../../config/URLs";
 import avatar from "../../../images/avatar.png";
+import LoadingComponent from "../../LoadingComponent/LoadingComponent";
 //INLINE STYLES
 //---------------------------------
 const useStyles = makeStyles((theme) => ({
@@ -53,46 +54,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PrivateNavbarTabs = (props) => {
-  const { userAuthImage, userAuthUsername } = props;
+  const { userAuthImage, userAuthUsername, logout, currentUser } = props;
   //Extract classes
   const classes = useStyles();
-  const { logout, currentUser } = props;
+
   const [tabsValue, setTabsValue] = useState(0);
-  const username = currentUser && currentUser.username;
-  // const userUrl = currentUser && currentUser.image.url;
-
-  //TAB HandleChange
-  const tabHandleChange = (event, newValue) => {
-    setTabsValue(newValue);
-  };
-
   //Create an instance of our theme for responsive design
   // Menu hook
   const [anchorEl, setAnchorEl] = useState(null); //position of the menu
   const [openMenu, setOpenMenu] = useState(false); //Determine the visibility of the menu
   //hooks for the tab
   const [value, setValue] = useState(0);
-  //Onchange handler
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  // HandleClick for the menu
-  //----------------------------------
-
-  const handleClick = (event) => {
-    console.log(event);
-    // The event represent either click or hover and this determine where we click whether on a button or div and we can get it position event.currentTarget
-    setAnchorEl(event.currentTarget); //The element was click
-    setOpenMenu(true);
-  };
-
-  // HandleClose for the menu
-  //----------------------------------
-  const handleClose = (e) => {
-    setAnchorEl(null); //Don't set any position
-    setOpenMenu(false);
-  };
+  // const userUrl = currentUser && currentUser.image.url;
+  console.log(currentUser);
 
   //Determine the selected tab when the page refreshes
   useEffect(() => {
@@ -108,6 +82,35 @@ const PrivateNavbarTabs = (props) => {
     }
   }, [value]);
 
+  //Onchange handler
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  // HandleClick for the menu
+  //----------------------------------
+
+  const handleClick = (event) => {
+    console.log(event);
+    // The event represent either click or hover and this determine where we click whether on a button or div and we can get it position event.currentTarget
+    setAnchorEl(event.currentTarget); //The element was click
+    setOpenMenu(true);
+  };
+
+  //TAB HandleChange
+  const tabHandleChange = (event, newValue) => {
+    setTabsValue(newValue);
+  };
+  // HandleClose for the menu
+  //----------------------------------
+  const handleClose = (e) => {
+    setAnchorEl(null); //Don't set any position
+    setOpenMenu(false);
+  };
+
+  if (!currentUser.picture) {
+    return <LoadingComponent />;
+  }
   return (
     <React.Fragment>
       <Tabs
@@ -132,12 +135,15 @@ const PrivateNavbarTabs = (props) => {
           label="Revolution"
         /> */}
       </Tabs>
-      <Tab label={`Logged in as ${userAuthUsername}`} className={classes.tab} />
+      <Tab
+        label={`Logged in as ${currentUser.username}`}
+        className={classes.tab}
+      />
       <Tab
         label={
           <img
             className={classes.profilePicture}
-            src={`${API_URL}/${userAuthImage ? userAuthImage : avatar}`}
+            src={`${API_URL}/${currentUser.picture.url}`}
           />
         }
       />
@@ -155,14 +161,18 @@ const PrivateNavbarTabs = (props) => {
         open={openMenu}
         onClose={handleClose}
         classes={{ paper: classes.menu }}
-        MenuListProps={{ onMouseLeave: handleClose }}
+        MenuListProps={{
+          onMouseLeave: handleClose
+        }}
         elevation={0}>
         <MenuItem
           onClick={() => {
             handleClose();
             setValue(1);
           }}
-          classes={{ root: classes.menuItem }}
+          classes={{
+            root: classes.menuItem
+          }}
           component={Link}
           to="/projects">
           Projects

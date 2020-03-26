@@ -10,9 +10,10 @@ import { makeStyles } from "@material-ui/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout } from "../../../redux/actions/users/usersActions";
+import { logout, currentUser } from "../../../redux/actions/users/usersActions";
 import { API_URL } from "../../../config/URLs";
 import avatar from "../../../images/avatar.png";
+import LoadingComponent from "../../LoadingComponent/LoadingComponent";
 //INLINE STYLES
 const useStyles = makeStyles((theme) => ({
   drawerIconContainer: {
@@ -55,11 +56,11 @@ const PrivateNavbarSideDrawer = (props) => {
   //check if we are on ios
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const { logout, userAuth } = props;
+  const { logout, currentUser } = props;
   const [tabsValue, setTabsValue] = useState(0);
-  const username = userAuth && userAuth.username;
-  const userUrl = userAuth && userAuth.image.url;
-
+  if (currentUser.picture === undefined) {
+    return <LoadingComponent />;
+  }
   return (
     <React.Fragment>
       <SwipeableDrawer
@@ -74,7 +75,7 @@ const PrivateNavbarSideDrawer = (props) => {
             <ListItemText className={classes.drawerItem} disableTypography>
               <img
                 className={classes.profilePicture}
-                src={`${API_URL}/${userAuthImage ? userAuthImage : avatar}`}
+                src={`${API_URL}/${currentUser.picture.url}`}
               />
             </ListItemText>
           </ListItem>
@@ -97,7 +98,7 @@ const PrivateNavbarSideDrawer = (props) => {
             component={Link}
             to="/projects">
             <ListItemText className={classes.drawerItem} disableTypography>
-              Logged in As {userAuthUsername}
+              Logged in As {currentUser.username}
             </ListItemText>
           </ListItem>
 
@@ -121,12 +122,10 @@ const PrivateNavbarSideDrawer = (props) => {
         </List>
       </SwipeableDrawer>
 
-      <IconButton className={classes.drawerIconContainer}>
-        <MenuIcon
-          className={classes.drawerIcon}
-          onClick={() => setOpenDrawer(!openDrawer)}
-          disableRipple
-        />
+      <IconButton
+        className={classes.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}>
+        <MenuIcon className={classes.drawerIcon} disableRipple />
       </IconButton>
     </React.Fragment>
   );
@@ -138,7 +137,7 @@ const actions = {
 
 const mapStateToProps = (state) => {
   return {
-    userAuth: state.userAuth.myProfile
+    currentUser: state.userAuth.currentUser
   };
 };
 export default connect(mapStateToProps, actions)(PrivateNavbarSideDrawer);

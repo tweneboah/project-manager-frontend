@@ -6,30 +6,23 @@ import { connect } from "react-redux";
 
 import PublicHeaderDashboard from "./Public/PublicHeaderDashboard";
 import PrivateHeaderDashboard from "./Private/PrivateHeaderDashboard";
-import avatar from "../../images/avatar.png";
+import LoadingComponent from "../LoadingComponent/LoadingComponent";
+
 const MenuDashboard = (props) => {
   const { currentUser, setCurrentUser } = props;
-
+  const userAuth = currentUser && currentUser;
+  const userAuthImage = currentUser && currentUser.picture;
+  console.log(currentUser);
   useEffect(() => {
     setCurrentUser();
   }, [setCurrentUser]);
 
-  let userAuth = null;
-
-  if (currentUser) {
-    console.log(currentUser.user);
-    userAuth = currentUser.user;
-  }
-  console.log(userAuth);
   return (
     <React.Fragment>
       {userAuth === null ? (
         <PublicHeaderDashboard />
       ) : (
-        <PrivateHeaderDashboard
-          userAuthImage={userAuth && userAuth.picture.url}
-          userAuthUsername={userAuth && userAuth.username}
-        />
+        <PrivateHeaderDashboard userAuthImage={""} userAuthUsername={""} />
       )}
     </React.Fragment>
   );

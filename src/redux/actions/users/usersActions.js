@@ -21,27 +21,25 @@ export const registerUser = (data) => {
         data: data
       });
 
-      const { jwt } = await userResponse.data;
-      const { _id, username, email, role, projects } = await userResponse.data
-        .user;
-      console.log(userResponse.data);
-      const userData = {
-        jwt,
-        _id,
-        username,
-        email,
-        role,
-
-        projects
-      };
+      // const { jwt } = await userResponse.data;
+      // const { _id, username, email, role, projects } = await userResponse.data
+      //   .user;
+      // console.log(userResponse.data);
+      // const userData = {
+      //   jwt,
+      //   _id,
+      //   username,
+      //   email,
+      //   role,
+      //   projects
+      // };
 
       dispact({
         type: REGISTER_USER,
-        payload: userData
+        payload: userResponse.data
       });
       // We have to return the user from here because we need the created user in our frontentend to create it's profile picture
-      
-      return userData;
+      return userResponse.data;
     } catch (error) {
       dispact({
         type: REGISTER_USER_ERROR,
@@ -63,12 +61,44 @@ export const loginUser = (data) => {
 
       //SAVE USER DETAILS INTO LOCALSTORAGE
       //Grab jwt
+      //Destructure what we want save to localstorage
+      const { jwt } = userResponse.data;
+      const {
+        username,
+        id,
+        email,
+        role,
+        projects,
+        income,
+        expenses,
+        project_todos,
+        picture,
+        createdAt,
+        updatedAt
+      } = userResponse.data.user;
 
+      const userData = {
+        jwt,
+        username,
+        id,
+        email,
+        role,
+        projects,
+        income,
+        expenses,
+        project_todos,
+        picture,
+        createdAt,
+        updatedAt
+      };
+      console.log("local storage", userResponse.data);
       dispact({
         type: LOGIN_USER,
-        payload: userResponse.data
+        payload: userData
       });
-      localStorage.setItem("user", JSON.stringify(userResponse.data));
+      console.log("userdata", userData);
+      console.log("response", userResponse.data);
+      localStorage.setItem("user", JSON.stringify(userData));
 
       toast.success("Successfully logged in");
     } catch (error) {

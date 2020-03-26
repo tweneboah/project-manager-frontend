@@ -67,6 +67,7 @@ const RegisterUser = (props) => {
     const userResponse = await registerUser(userData);
 
     if (userResponse) {
+      // Rember
       //Create profile picture
       const formData = new FormData();
       formData.append("files", data.picture[0]);
@@ -74,7 +75,7 @@ const RegisterUser = (props) => {
       //Required by strapi
       formData.append("source", "users-permissions");
       formData.append("ref", "user"); //name of content type
-      formData.append("refId", userResponse._id); //id of content type
+      formData.append("refId", userResponse.user._id); //id of content type
       formData.append("field", "picture"); //name of key for the content
       const res = await axios({
         method: "POST",
@@ -83,27 +84,39 @@ const RegisterUser = (props) => {
       });
       //Grab the image created and add it to the object
       const picture = res.data[0];
-      const { _id, username, email, role, projects, jwt } = userResponse;
-
-      console.log(userResponse.data);
-      const userData = {
-        jwt,
-        _id,
+      const { jwt } = userResponse.jwt;
+      const {
         username,
+        id,
         email,
         role,
-        picture,
-        projects
-      };
-      console.log("WOOO", userData);
-      console.log("Picture", res.data[0]);
-      console.log("form", userResponse);
-      localStorage.setItem("user", JSON.stringify(userData));
+        projects,
+        income,
+        expenses,
+        project_todos,
+        createdAt,
+        updatedAt
+      } = userResponse.user;
 
-      props.history.push(`/login`);
+      const userData = {
+        jwt,
+        username,
+        id,
+        email,
+        role,
+        projects,
+        income,
+        expenses,
+        project_todos,
+        picture,
+        createdAt,
+        updatedAt
+      };
+
+      localStorage.setItem("user", JSON.stringify(userData));
+      await setCurrentUser();
+      props.history.push(`/projects`);
     }
-    // const { _id } = userResponse && userResponse.data.user;
-    //Grab the user id from axios
   };
 
   return (
