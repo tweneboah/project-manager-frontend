@@ -33,8 +33,7 @@ const useStyles = makeStyles((theme) => ({
   drawerButton: {
     background: "#d63031",
     padding: "10px"
-  },
-  
+  }
 }));
 
 const PublicNavbarSideDrawer = () => {
@@ -133,12 +132,10 @@ const PublicNavbarSideDrawer = () => {
         </List>
       </SwipeableDrawer>
 
-      <IconButton className={classes.drawerIconContainer}>
-        <MenuIcon
-          className={classes.drawerIcon}
-          onClick={() => setOpenDrawer(!openDrawer)}
-          disableRipple
-        />
+      <IconButton
+        className={classes.drawerIconContainer}
+        onClick={() => setOpenDrawer(!openDrawer)}>
+        <MenuIcon className={classes.drawerIcon} disableripple="false" />
       </IconButton>
     </React.Fragment>
   );

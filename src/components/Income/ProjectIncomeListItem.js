@@ -6,7 +6,6 @@ import {
   Avatar,
   ListItemText,
   Typography,
-  Divider,
   Paper
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,8 +16,10 @@ import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersAct
 //CSS
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
-    margin: "20px"
+    marginBottom: "8px",
+    marginRight: "30px",
+    marginLeft: "30px",
+    marginTop: "20px"
   },
   inline: {
     display: "inline",

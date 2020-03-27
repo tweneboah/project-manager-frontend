@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import ProjectListItem from "./ProjectListItem";
 import { connect } from "react-redux";
 import {
-  fetchAllProjects,
-  fetchProjectByUserCode
+  fetchProjectByUserCode,
+  fetchAllProjectsByUser
 } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import StoreIcon from "@material-ui/icons/Store";
@@ -11,6 +11,7 @@ import { Button, Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
+import { setCurrentUser } from "../../redux/actions/users/usersActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -45,20 +46,31 @@ const ProjectLists = (props) => {
   //Css
   const classes = useStyles();
   //Props
-  const { fetchAllProjects, projects, fetchAllExpenses } = props;
+  const {
+    projects,
+    fetchAllExpenses,
+    fetchAllProjectsByUser,
+    currentUser
+  } = props;
 
+  const userJwt = currentUser && currentUser.jwt;
+  const userId = currentUser && currentUser.id;
   useEffect(() => {
-    fetchAllProjects();
-  }, [fetchAllProjects, fetchAllExpenses]);
-  console.log(props);
+    fetchAllProjectsByUser(userJwt, userId);
+  }, [fetchAllExpenses, userJwt]);
+
   // Go to Add project page
   const goToCreateProject = () => {
     props.history.push("/projects/create-project");
   };
 
-  // if (!currentUser) {
-  //   return <LoadingComponent />;
-  // }
+  if (currentUser === null) {
+    return (
+      <div>
+        <h1>Loading</h1>
+      </div>
+    );
+  }
   console.log(props);
   return (
     <div style={{ marginTop: "-50px" }}>
@@ -152,11 +164,15 @@ const ProjectLists = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    projects: state.projects
+    projects: state.projects,
+    currentUser: state.userAuth.currentUser
   };
 };
 const actions = {
-  fetchAllProjects
+  setCurrentUser,
+  fetchAllProjectsByUser
 };
 
-export default withRouter(connect(mapStateToProps, actions)(ProjectLists));
+export default withRouter(
+  connect(mapStateToProps, actions)(PrivateRoute(ProjectLists))
+);

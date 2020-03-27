@@ -4,17 +4,12 @@ import {
   setCurrentUser,
   getMyProfile
 } from "../../redux/actions/users/usersActions";
-import LoadingComponent from "../LoadingComponent/LoadingComponent";
 
 const PrivateRoute = (ChildComponent) => {
   const Composedcomponent = (props) => {
-    const { isLoggin, setCurrentUser, getMyProfile } = props;
+    const { currentUser } = props;
 
-    useEffect(() => {
-      setCurrentUser();
-    }, []);
-
-    if (isLoggin === null) {
+    if (currentUser === null) {
       props.history.push("/");
     }
 
@@ -25,17 +20,12 @@ const PrivateRoute = (ChildComponent) => {
     );
   };
 
-  const actions = {
-    setCurrentUser,
-    getMyProfile
-  };
-
   const mapStateToprops = (state) => {
     return {
-      isLoggin: state.userAuth.currentUser
+      currentUser: state.userAuth.currentUser
     };
   };
-  return connect(mapStateToprops, actions)(Composedcomponent);
+  return connect(mapStateToprops, null)(Composedcomponent);
 };
 
 export default PrivateRoute;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -71,6 +71,7 @@ const RegisterUser = (props) => {
     const userResponse = await registerUser(userData);
 
     if (userResponse) {
+      console.log(userResponse);
       // Rember
       //Create profile picture
       const formData = new FormData();
@@ -88,7 +89,7 @@ const RegisterUser = (props) => {
       });
       //Grab the image created and add it to the object
       const picture = res.data[0];
-      const { jwt } = userResponse.jwt;
+      const { jwt } = userResponse;
       const {
         username,
         id,
@@ -252,4 +253,8 @@ const actions = {
   setCurrentUser
 };
 
+
+const mapStateToProps = (state) => {
+  return state.userAuth.currentUser
+}
 export default connect(null, actions)(RegisterUser);

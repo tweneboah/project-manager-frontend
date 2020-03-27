@@ -3,20 +3,27 @@ import axios from "axios";
 import { API_URL } from "../../../config/URLs";
 
 import {
-  FETCH_ALL_PROJECTS,
   FETCH_ALL_PROJECTS_ERRORS,
   FETCH_SINGLE_PROJECT,
   CREATE_PROJECT,
-  FETCH_PROJECT_BY_USER_CODE
+  FETCH_PROJECT_BY_USER_CODE,
+  FETCH_ALL_PROJECTS_BY_USER
 } from "../actionTypes/actionTypes";
 
-export const fetchAllProjects = () => {
+export const fetchAllProjectsByUser = (jwt, userId) => {
   return async (dispatch) => {
     try {
-      const projectsResponse = await axios.get(`${API_URL}/projects`);
+      const projectsResponse = await axios({
+        method: "GET",
+        url: `${API_URL}/projects?user=${userId}`,
+
+        headers: {
+          Authorization: `Bearer ${jwt}`
+        }
+      });
 
       dispatch({
-        type: FETCH_ALL_PROJECTS,
+        type: FETCH_ALL_PROJECTS_BY_USER,
         payload: projectsResponse.data
       });
     } catch (error) {
@@ -45,12 +52,15 @@ export const fetchProjectByUserCode = (userCode) => {
     }
   };
 };
-export const fetchSingleProject = (projectId) => {
+export const fetchSingleProject = (projectId, token) => {
   return async (dispatch) => {
     try {
       const projectsResponse = await axios({
         method: "GET",
-        url: `${API_URL}/projects/${projectId}`
+        url: `${API_URL}/projects/${projectId}`,
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
 
       dispatch({
@@ -63,12 +73,15 @@ export const fetchSingleProject = (projectId) => {
   };
 };
 
-export const createProject = (data) => {
+export const createProject = (data, jwt) => {
   return async (dispatch) => {
     await axios({
       method: "POST",
       url: `${API_URL}/projects`,
-      data
+      data: data,
+      headers: {
+        Authorization: `Bearer ${jwt}`
+      }
     });
     dispatch({
       type: CREATE_PROJECT

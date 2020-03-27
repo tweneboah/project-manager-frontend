@@ -10,9 +10,8 @@ import { makeStyles } from "@material-ui/styles";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { logout, currentUser } from "../../../redux/actions/users/usersActions";
+import { logout } from "../../../redux/actions/users/usersActions";
 import { API_URL } from "../../../config/URLs";
-import avatar from "../../../images/avatar.png";
 import LoadingComponent from "../../LoadingComponent/LoadingComponent";
 //INLINE STYLES
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PrivateNavbarSideDrawer = (props) => {
-  const { userAuthUsername, userAuthImage } = props;
   //Extract classes
   const classes = useStyles();
   //DRAWER
@@ -125,7 +123,7 @@ const PrivateNavbarSideDrawer = (props) => {
       <IconButton
         className={classes.drawerIconContainer}
         onClick={() => setOpenDrawer(!openDrawer)}>
-        <MenuIcon className={classes.drawerIcon} disableRipple />
+        <MenuIcon className={classes.drawerIcon} disableripple="false" />
       </IconButton>
     </React.Fragment>
   );

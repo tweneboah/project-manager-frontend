@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -14,10 +14,11 @@ import InputLabel from "@material-ui/core/InputLabel";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
-
-import { createExpenses } from "../../../redux/actions/expenses/expensesActions";
 import { MenuItem, Select } from "@material-ui/core";
 import { createProject } from "../../../redux/actions/projects/projectsActions";
+import { setCurrentUser } from "../../../redux/actions/users/usersActions";
+import LoadingComponent from "../../LoadingComponent/LoadingComponent";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -52,23 +53,28 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CreateProjectForm = (props) => {
+  const classes = useStyles();
   const { projectId } = useParams();
-  console.log(props);
-  const { createProject } = props;
+
+  const { createProject, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
+
+  const userId = currentUser && currentUser.id;
+  const userToken = currentUser && currentUser.jwt;
 
   const onSubmit = async (data) => {
     const incomeData = {
       title: data.title,
       description: data.description,
       amount: data.amount,
-      project: projectId
+      project: projectId,
+      category: data.category,
+      user: userId
     };
-    await createProject(incomeData);
+    console.log(data);
+    await createProject(incomeData, userToken);
     props.history.push("/projects");
   };
-
-  const classes = useStyles();
 
   return (
     <div style={{ background: "#f1f2f6", marginTop: "-50px", height: "90vh" }}>
@@ -139,10 +145,10 @@ const CreateProjectForm = (props) => {
                   fullWidth
                   variant="outlined"
                   style={{ marginTop: "10px" }}>
-                  <MenuItem value="education">Education</MenuItem>
-                  <MenuItem value="estate">Estate</MenuItem>
-                  <MenuItem value="business">Business</MenuItem>
-                  <MenuItem value="other">Other</MenuItem>
+                  <MenuItem value="Education">Education</MenuItem>
+                  <MenuItem value="Estate">Estate</MenuItem>
+                  <MenuItem value="Business">Business</MenuItem>
+                  <MenuItem value="Other">Other</MenuItem>
                 </Select>
               }
               name="category"
@@ -171,6 +177,14 @@ const CreateProjectForm = (props) => {
 };
 
 const actions = {
-  createProject
+  createProject,
+  setCurrentUser
 };
-export default connect(null, actions)(CreateProjectForm);
+
+const mapStateToProps = (state) => {
+  return {
+    projects: state.projects,
+    currentUser: state.userAuth.currentUser
+  };
+};
+export default connect(mapStateToProps, actions)(CreateProjectForm);

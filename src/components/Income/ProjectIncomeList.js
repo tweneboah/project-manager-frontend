@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import ProjectIncomeListItem from "./ProjectIncomeListItem";
 import { Button, Grid, makeStyles } from "@material-ui/core";
+import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -19,6 +20,9 @@ const useStyles = makeStyles((theme) => {
     parentOneChild2: {
       textAlign: "center",
       margin: "20px"
+    },
+    parentTwo: {
+      background: "red"
     }
   };
 });
@@ -26,11 +30,13 @@ const useStyles = makeStyles((theme) => {
 const ProjectIncomeList = (props) => {
   //css
   const classes = useStyles();
-  const { fetchSingleProject, project } = props;
+  const { fetchSingleProject, project, currentUser } = props;
   const { projectId } = useParams();
 
+  const userJwt = currentUser && currentUser.jwt;
+
   useEffect(() => {
-    fetchSingleProject(projectId);
+    fetchSingleProject(projectId, userJwt);
   }, [fetchSingleProject, projectId]);
 
   //Go to create Income page
@@ -112,7 +118,12 @@ const actions = {
 
 const mapStateToProps = (state) => {
   return {
-    project: state.projects.singleProject
+    project: state.projects.singleProject,
+    currentUser: state.userAuth.currentUser
   };
 };
-export default connect(mapStateToProps, actions)(ProjectIncomeList);
+
+export default connect(
+  mapStateToProps,
+  actions
+)(PrivateRoute(ProjectIncomeList));

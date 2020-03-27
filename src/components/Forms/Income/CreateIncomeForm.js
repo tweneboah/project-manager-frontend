@@ -6,7 +6,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
@@ -54,7 +53,8 @@ const CreateIncomeForm = (props) => {
   const { createIncome, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
   //Grab the id of the current Logged in User to create the income
-  const id = currentUser && currentUser._id;
+  const id = currentUser && currentUser.id;
+  const userJwt = currentUser && currentUser.jwt;
 
   const onSubmit = async (data) => {
     const incomeData = {
@@ -64,7 +64,7 @@ const CreateIncomeForm = (props) => {
       project: projectId,
       user: id
     };
-    await createIncome(incomeData);
+    await createIncome(incomeData, userJwt);
     props.history.push(`/project/income/${projectId}`);
   };
 

@@ -6,19 +6,19 @@ import {
   Avatar,
   ListItemText,
   Typography,
-  Divider,
-  Paper
+  Paper,
+  Grid
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
 import { API_URL } from "../../config/URLs";
+import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
   root: {
-    backgroundColor: theme.palette.background.paper,
     margin: "10px"
   },
   inline: {
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ProjectExpensesListItem = (props) => {
-  console.log(props);
   //CSS
   const classes = useStyles();
   const { expense, user, incomeExpensesProjectCreator } = props;
@@ -58,7 +57,7 @@ const ProjectExpensesListItem = (props) => {
             className={classes.title}
             primary={expense.title}
             secondary={
-              <React.Fragment>
+              <div>
                 <Typography
                   component="span"
                   className={classes.inline}
@@ -104,7 +103,7 @@ const ProjectExpensesListItem = (props) => {
                 </Typography>
 
                 <Typography>Confirmed ? {expense.confirm}</Typography>
-              </React.Fragment>
+              </div>
             }
           />
         </ListItem>
@@ -122,4 +121,7 @@ const mapStateToprops = (state) => {
 const actions = {
   incomeExpensesProjectCreator
 };
-export default connect(mapStateToprops, actions)(ProjectExpensesListItem);
+export default connect(
+  mapStateToprops,
+  actions
+)(PrivateRoute(ProjectExpensesListItem));

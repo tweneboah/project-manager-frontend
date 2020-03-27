@@ -13,10 +13,7 @@ import {
 } from "recharts";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import uuid from "uuid/v4";
-import {
-  fetchAllProjects,
-  fetchSingleProject
-} from "../../redux/actions/projects/projectsActions";
+import { fetchSingleProject } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { Button, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -85,11 +82,12 @@ const ProjectsDashboard = (props) => {
   const url = currentUser && currentUser.picture.url;
   const createdBy = currentUser && currentUser.username;
   const createdAt = currentUser && currentUser.createdAt;
+  const userToken = currentUser && currentUser.jwt;
   //Extract Params Id
   const projectId = props.match.params.projectId;
   //UseEffect
   useEffect(() => {
-    fetchSingleProject(projectId);
+    fetchSingleProject(projectId, userToken);
   }, [projectId, fetchSingleProject]);
 
   // Draggable
@@ -502,7 +500,6 @@ const mapStateToProps = (state) => {
   };
 };
 const actions = {
-  fetchAllProjects,
   fetchSingleProject
 };
 

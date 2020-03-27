@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -6,7 +6,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import Link from "@material-ui/core/Link";
 import { connect } from "react-redux";
-import Grid from "@material-ui/core/Grid";
 import { DropzoneArea } from "material-ui-dropzone";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -15,7 +14,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
 import { createExpenses } from "../../../redux/actions/expenses/expensesActions";
-import LoadingComponent from "../../LoadingComponent/LoadingComponent";
 
 function Copyright() {
   return (
@@ -71,6 +69,7 @@ const CreateExpensesForm = (props) => {
       receiptPicture: data.receiptPicture
     };
     await createExpenses(incomeData, jwt);
+
     props.history.push(`/project/expenses/${projectId}`);
     console.log(incomeData);
   };
@@ -232,6 +231,7 @@ const CreateExpensesForm = (props) => {
 const actions = {
   createExpenses
 };
+
 const mapStateToProps = (state) => {
   return {
     currentUser: state.userAuth.currentUser

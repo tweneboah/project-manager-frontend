@@ -107,14 +107,12 @@ const PublicNavbarTabs = (props) => {
           component={Link}
           to="/login"
           className={classes.tab}
-          component={Link}
           label="Login"
         />
         <Tab
           component={Link}
           to="/register"
           className={classes.tab}
-          component={Link}
           label="Register"
         />
         <Tab

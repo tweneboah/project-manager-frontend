@@ -5,6 +5,8 @@ import { Button, Grid, makeStyles } from "@material-ui/core";
 import ProjectExpensesListItem from "./ProjectExpensesListItem";
 import { fetchSingleProject } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
+import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
+import { setCurrentUser } from "../../redux/actions/users/usersActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -27,10 +29,12 @@ const useStyles = makeStyles((theme) => {
 const ProjectExpensesList = (props) => {
   //css
   const classes = useStyles();
-  const { project, fetchSingleProject } = props;
+  const { project, fetchSingleProject, currentUser } = props;
   const { projectId } = useParams();
+
+  const jwt = currentUser && currentUser.jwt;
   useEffect(() => {
-    fetchSingleProject(projectId);
+    fetchSingleProject(projectId, jwt);
   }, [fetchSingleProject, projectId]);
 
   //Go to create Income page
@@ -101,7 +105,11 @@ const actions = {
 
 const mapStateToProps = (state) => {
   return {
-    project: state.projects
+    project: state.projects,
+    currentUser: state.userAuth.currentUser
   };
 };
-export default connect(mapStateToProps, actions)(ProjectExpensesList);
+export default connect(
+  mapStateToProps,
+  actions
+)(PrivateRoute(ProjectExpensesList));

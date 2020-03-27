@@ -13,12 +13,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
-import { createExpenses } from "../../../redux/actions/expenses/expensesActions";
 import { createProjectTodo } from "../../../redux/actions/Todos/projectTodos";
-import {
-  fetchSingleProject,
-  fetchAllProjects
-} from "../../../redux/actions/projects/projectsActions";
+
 
 function Copyright() {
   return (
@@ -57,7 +53,7 @@ const CreateprojectTodoForm = (props) => {
   //css
   const classes = useStyles();
   const { projectId } = useParams();
-  const { createProjectTodo, currentUser, fetchAllProjects } = props;
+  const { createProjectTodo, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
   const jwt = currentUser && currentUser.jwt;
   const id = currentUser && currentUser._id;
@@ -65,11 +61,10 @@ const CreateprojectTodoForm = (props) => {
   const onSubmit = async (data) => {
     const incomeData = {
       content: data.content,
-      project: projectId
+      project: projectId,
+      user: id
     };
     await createProjectTodo(incomeData, jwt);
-    await fetchAllProjects();
-    fetchSingleProject();
     props.history.push(`/project/dashboard/${projectId}`);
   };
 
@@ -127,9 +122,7 @@ const CreateprojectTodoForm = (props) => {
 };
 
 const actions = {
-  createProjectTodo,
-  fetchSingleProject,
-  fetchAllProjects
+  createProjectTodo
 };
 
 const mapStateToProps = (state) => {
