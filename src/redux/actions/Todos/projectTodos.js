@@ -4,7 +4,7 @@ import { API_URL } from "../../../config/URLs";
 
 import {
   CREATE_PROJECT_TODOS,
-  FETCH_PROJECT_TODOS
+  FETCH_PROJECT_TODOS_BY_PROJECT
 } from "../actionTypes/actionTypes";
 
 export const createProjectTodo = (projectTodoData, jwt) => {
@@ -26,19 +26,19 @@ export const createProjectTodo = (projectTodoData, jwt) => {
   };
 };
 
-export const fetchProjectTodos = (jwt) => {
+export const fetchProjectTodosByProject = (projectId, jwt) => {
   return async (dispatch) => {
     try {
       const projectTodosResponse = await axios({
         method: "GET",
-        url: `${API_URL}/project-todos`,
+        url: `${API_URL}/project-todos?project=${projectId}`,
         headers: {
           Authorization: `Bearer ${jwt}`
         }
       });
 
       dispatch({
-        type: FETCH_PROJECT_TODOS,
+        type: FETCH_PROJECT_TODOS_BY_PROJECT,
         payload: projectTodosResponse.data
       });
     } catch (error) {

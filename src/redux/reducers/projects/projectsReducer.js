@@ -5,13 +5,15 @@ import {
   CREATE_INCOME,
   CREATE_EXPENSE,
   CREATE_PROJECT_TODOS,
-  FETCH_ALL_PROJECTS_BY_USER
+  FETCH_ALL_PROJECTS_BY_USER,
+  FETCH_PROJECT_TODOS_BY_PROJECT
 } from "../../actions/actionTypes/actionTypes";
 
 const INITIAL_STATE = {
   fetchErrors: {},
   projects: [],
-  singleProject: null
+  singleProject: null,
+  projectTodos: []
 };
 
 const projectsReducer = (state = INITIAL_STATE, action) => {
@@ -20,6 +22,12 @@ const projectsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         projects: [...action.payload]
+      };
+    case CREATE_PROJECT_TODOS:
+    case FETCH_PROJECT_TODOS_BY_PROJECT:
+      return {
+        ...state,
+        projectTodos: [...action.payload]
       };
 
     case FETCH_ALL_PROJECTS_ERRORS:

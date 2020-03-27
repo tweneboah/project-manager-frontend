@@ -14,7 +14,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useParams } from "react-router-dom";
 import { createProjectTodo } from "../../../redux/actions/Todos/projectTodos";
-
+import PrivateRoute from "../../PrivateRoutes/PrivateRoutes";
+import { fetchAllProjectsByUser } from "../../../redux/actions/projects/projectsActions";
 
 function Copyright() {
   return (
@@ -56,7 +57,7 @@ const CreateprojectTodoForm = (props) => {
   const { createProjectTodo, currentUser } = props;
   const { control, handleSubmit, errors } = useForm();
   const jwt = currentUser && currentUser.jwt;
-  const id = currentUser && currentUser._id;
+  const id = currentUser && currentUser.id;
 
   const onSubmit = async (data) => {
     const incomeData = {
@@ -65,6 +66,7 @@ const CreateprojectTodoForm = (props) => {
       user: id
     };
     await createProjectTodo(incomeData, jwt);
+    fetchAllProjectsByUser(id, jwt);
     props.history.push(`/project/dashboard/${projectId}`);
   };
 
@@ -122,7 +124,8 @@ const CreateprojectTodoForm = (props) => {
 };
 
 const actions = {
-  createProjectTodo
+  createProjectTodo,
+  fetchAllProjectsByUser
 };
 
 const mapStateToProps = (state) => {
@@ -130,4 +133,7 @@ const mapStateToProps = (state) => {
     currentUser: state.userAuth.currentUser
   };
 };
-export default connect(mapStateToProps, actions)(CreateprojectTodoForm);
+export default connect(
+  mapStateToProps,
+  actions
+)(PrivateRoute(CreateprojectTodoForm));

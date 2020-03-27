@@ -11,15 +11,19 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import uuid from "uuid/v4";
-import { fetchSingleProject } from "../../redux/actions/projects/projectsActions";
+
+import {
+  fetchSingleProject,
+  fetchAllProjectsByUser
+} from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import { Button, Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 import { API_URL } from "../../config/URLs";
 import FooterComponent from "../Footer/FooterComponent";
+import { fetchProjectTodosByProject } from "../../redux/actions/Todos/projectTodos";
+import Todos from "../Todos";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -76,82 +80,32 @@ const useStyles = makeStyles((theme) => {
 });
 
 const ProjectsDashboard = (props) => {
+  //CSS CLASS
+  const classes = useStyles();
+
   //Props
-  const { fetchSingleProject, project, currentUser } = props;
+  const {
+    fetchSingleProject,
+    project,
+    currentUser,
+    fetchAllProjectsByUser
+  } = props;
   //Grab image url of the user
   const url = currentUser && currentUser.picture.url;
   const createdBy = currentUser && currentUser.username;
   const createdAt = currentUser && currentUser.createdAt;
   const userToken = currentUser && currentUser.jwt;
+  const userId = currentUser && currentUser.id;
+  const expenses = project && project.expenses;
+  const moneyInvested = project && project.incomes;
+  const projectTodos = project && project.project_todos;
   //Extract Params Id
   const projectId = props.match.params.projectId;
   //UseEffect
   useEffect(() => {
     fetchSingleProject(projectId, userToken);
-  }, [projectId, fetchSingleProject]);
-
-  // Draggable
-  //Grab the project Todos and put them into state
-  const itemsFromBackend = project && project.project_todos;
-
-  const columnsFromBackend = {
-    [uuid()]: {
-      name: "Requested",
-      items: itemsFromBackend
-        ? itemsFromBackend
-        : [{ id: "533", content: "Refresh the page" }]
-    },
-    [uuid()]: {
-      name: "In Progress",
-      items: []
-    },
-    [uuid()]: {
-      name: "Done",
-      items: []
-    }
-  };
-  const onDragEnd = (result, columns, setColumns) => {
-    if (!result.destination) return;
-    const { source, destination } = result;
-
-    if (source.droppableId !== destination.droppableId) {
-      const sourceColumn = columns[source.droppableId];
-      const destColumn = columns[destination.droppableId];
-      const sourceItems = [...sourceColumn.items];
-      const destItems = [...destColumn.items];
-      const [removed] = sourceItems.splice(source.index, 1);
-      destItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...sourceColumn,
-          items: sourceItems
-        },
-        [destination.droppableId]: {
-          ...destColumn,
-          items: destItems
-        }
-      });
-    } else {
-      const column = columns[source.droppableId];
-      const copiedItems = [...column.items];
-      const [removed] = copiedItems.splice(source.index, 1);
-      copiedItems.splice(destination.index, 0, removed);
-      setColumns({
-        ...columns,
-        [source.droppableId]: {
-          ...column,
-          items: copiedItems
-        }
-      });
-    }
-  };
-  const [columns, setColumns] = useState(columnsFromBackend);
-  //CSS CLASS
-  const classes = useStyles();
-
-  // const [todos, settodos] = useState(projectTodos);
-  // const [columns, setColumns] = useState(columnsFromBackend);
+    fetchAllProjectsByUser(userId, userToken);
+  }, []);
 
   const goToExpensesPage = () => {
     props.history.push(`/project/expenses/${projectId}`);
@@ -170,20 +124,18 @@ const ProjectsDashboard = (props) => {
   let totalIncome = "0.0";
   let moneyLeft = "0.0";
 
-  if (project !== null) {
-    if (project.expenses.length > 0) {
-      totalExpenses = project.expenses.reduce((acc, current) => {
-        return acc + current.amount;
-      }, 0);
-    }
+  //Calc Expenses
+  if (expenses !== null && expenses.length > 0) {
+    totalExpenses = project.expenses.reduce((acc, current) => {
+      return acc + current.amount;
+    }, 0);
   }
 
-  if (project !== null) {
-    if (project.incomes.length > 0) {
-      totalIncome = project.incomes.reduce((acc, current) => {
-        return acc + current.amount;
-      }, 0);
-    }
+  //Calc Money Invested
+  if (moneyInvested !== null && moneyInvested.length > 0) {
+    totalIncome = project.incomes.reduce((acc, current) => {
+      return acc + current.amount;
+    }, 0);
   }
   moneyLeft = totalIncome - totalExpenses;
 
@@ -339,7 +291,9 @@ const ProjectsDashboard = (props) => {
           container
           direction="row"
           justify="center"
-          style={{ backgroundColor: "#356359" }}>
+          style={{
+            backgroundColor: "#356359"
+          }}>
           <Grid
             item
             style={{
@@ -347,14 +301,26 @@ const ProjectsDashboard = (props) => {
             }}>
             {/* Draggable */}
             <Grid item>
-              <h2 style={{ textAlign: "center", color: "#dfe6e9" }}>
+              <h2
+                style={{
+                  textAlign: "center",
+                  color: "#dfe6e9"
+                }}>
                 Drag your todos to arrange
               </h2>
             </Grid>
-            <Grid item style={{ textAlign: "center", marginBottom: "10px" }}>
+            <Grid
+              item
+              style={{
+                textAlign: "center",
+                marginBottom: "10px"
+              }}>
               <Button
                 variant="outlined"
-                style={{ color: "#dfe6e9", border: "1px solid white" }}
+                style={{
+                  color: "#dfe6e9",
+                  border: "1px solid white"
+                }}
                 onClick={goToCreateProjectTodoPage}>
                 Add Todo
               </Button>
@@ -365,92 +331,13 @@ const ProjectsDashboard = (props) => {
                 justifyContent: "center",
                 height: "50%"
               }}>
-              <DragDropContext
-                onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
-                {Object.entries(columns).map(([columnId, column], index) => {
-                  return (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        background: "#035449",
-                        minHeight: "100em"
-                      }}
-                      key={columnId}>
-                      <h2 style={{ color: "#81ecec" }}>{column.name}</h2>
-                      <div style={{ margin: 8 }}>
-                        <Droppable droppableId={columnId} key={columnId}>
-                          {(provided, snapshot) => {
-                            return (
-                              <div
-                                {...provided.droppableProps}
-                                ref={provided.innerRef}
-                                style={{
-                                  background: snapshot.isDraggingOver
-                                    ? "#F39C9E"
-                                    : "#5F7974",
-                                  padding: 4,
-                                  width: 250,
-                                  minHeight: "30rem"
-                                }}>
-                                {column.items.map((item, index) => {
-                                  return (
-                                    <Draggable
-                                      key={item.id}
-                                      draggableId={item.id}
-                                      index={index}>
-                                      {(provided, snapshot) => {
-                                        return (
-                                          <div
-                                            ref={provided.innerRef}
-                                            {...provided.draggableProps}
-                                            {...provided.dragHandleProps}
-                                            style={{
-                                              userSelect: "none",
-                                              paddingTop: 20,
-                                              margin: "0 0 8px 0",
-                                              minHeight: "3rem",
-                                              backgroundColor: snapshot.isDragging
-                                                ? "#263B4A"
-                                                : "#456C86",
-                                              color: "white",
-                                              textAlign: "center",
-                                              ...provided.draggableProps.style
-                                            }}>
-                                            {/* Draggable items */}
-                                            {itemsFromBackend && item.content}
-                                            <div>
-                                              <img
-                                                className={
-                                                  classes.profilePicture
-                                                }
-                                                alt="profile"
-                                                src={`${API_URL}/${url}`}
-                                              />
-                                            </div>
-                                            <div>created By: {createdBy}</div>
-                                            <div>
-                                              <Moment fromNow>
-                                                {createdAt}
-                                              </Moment>
-                                            </div>
-                                          </div>
-                                        );
-                                      }}
-                                    </Draggable>
-                                  );
-                                })}
-                                {provided.placeholder}
-                              </div>
-                            );
-                          }}
-                        </Droppable>
-                      </div>
-                    </div>
-                  );
-                })}
-              </DragDropContext>
+              {/* DROP IT HERE */}
+              <Todos
+                projectTodos={projectTodos}
+                url={url}
+                createdBy={createdBy}
+                createdAt={createdAt}
+              />
             </Grid>
           </Grid>
           <Grid
@@ -459,7 +346,11 @@ const ProjectsDashboard = (props) => {
               width: "30rem",
               marginTop: "30px"
             }}>
-            <h2 style={{ textAlign: "center", color: "#81ecec" }}>
+            <h2
+              style={{
+                textAlign: "center",
+                color: "#81ecec"
+              }}>
               Graphical view of your expenses and money invested
             </h2>
             <ResponsiveContainer>
@@ -500,7 +391,8 @@ const mapStateToProps = (state) => {
   };
 };
 const actions = {
-  fetchSingleProject
+  fetchSingleProject,
+  fetchAllProjectsByUser
 };
 
 export default connect(
