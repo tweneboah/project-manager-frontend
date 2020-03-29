@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import ProjectListItem from "./ProjectListItem";
 import { connect } from "react-redux";
-import {
-  fetchProjectByUserCode,
-  fetchAllProjectsByUser
-} from "../../redux/actions/projects/projectsActions";
+import { fetchAllProjectsByUser } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import StoreIcon from "@material-ui/icons/Store";
 import { Button, Grid } from "@material-ui/core";

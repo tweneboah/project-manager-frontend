@@ -27,12 +27,15 @@ import WhatWeCanDoForYou from "./components/Pages/WhatWeCanDoForYou";
 import CustomeSoftwareDevelopment from "./components/Pages/CustomeSoftwareDevelopment";
 import StudyWithMe from "./components/Pages/StudyWithMe";
 
+import ExpensesCommentsForm from "./components/Forms/Comments/ExpensesCommentsForm";
+
 const App = (props) => {
   const { setCurrentUser, getMyProfile, userAuth } = props;
   const id = userAuth && userAuth._id;
 
   useEffect(() => {
     setCurrentUser();
+
     // getMyProfile(id);
   }, [setCurrentUser, id, getMyProfile]);
 
@@ -103,6 +106,12 @@ const App = (props) => {
           />
           <Route exact path="/study" component={StudyWithMe} />
           <Route exact path="/aboutme" component={AboutMe} />
+
+          <Route
+            exact
+            path="/project/expenses/:projectId/create-comment"
+            component={ExpensesCommentsForm}
+          />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>

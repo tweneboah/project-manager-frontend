@@ -31,7 +31,7 @@ const ProjectExpensesList = (props) => {
   const classes = useStyles();
   const { project, fetchSingleProject, currentUser } = props;
   const { projectId } = useParams();
-
+  console.log("expnselist", project);
   const jwt = currentUser && currentUser.jwt;
   useEffect(() => {
     fetchSingleProject(projectId, jwt);

@@ -6,8 +6,7 @@ import {
   Avatar,
   ListItemText,
   Typography,
-  Paper,
-  Grid
+  Paper
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
@@ -15,6 +14,9 @@ import { connect } from "react-redux";
 import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
 import { API_URL } from "../../config/URLs";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
+import ExpensesCommentsForm from "../Forms/Comments/ExpensesCommentsForm";
+import { expensesCommentsAction } from "../../redux/actions/comments/expensesCommentsAction2";
+import CommentsList from "../Comments/CommentsList";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -39,13 +41,19 @@ const useStyles = makeStyles((theme) => ({
 const ProjectExpensesListItem = (props) => {
   //CSS
   const classes = useStyles();
-  const { expense, user, incomeExpensesProjectCreator } = props;
-  const userId = expense && expense.user;
-  const author = user && user.username;
+  const {
+    expense,
+    currentUser,
+    incomeExpensesProjectCreator,
+    expensesCommentsAction
+  } = props;
+  const userToken = currentUser && currentUser.jwt;
+  const username = currentUser && currentUser.username;
+  const expeseId = expense && expense.id;
 
   useEffect(() => {
-    incomeExpensesProjectCreator(userId);
-  }, [incomeExpensesProjectCreator]);
+    expensesCommentsAction(userToken, expeseId);
+  }, []);
   return (
     <List className={classes.root}>
       <Paper>
@@ -78,7 +86,7 @@ const ProjectExpensesListItem = (props) => {
                 {/* <Divider /> */}
                 {/* Author */}
                 <Typography style={{ color: "#218c74" }}>
-                  Author: {author}
+                  Author: {username}
                 </Typography>
                 {/* <Divider /> */}
                 {/* Merchant Name */}
@@ -101,7 +109,8 @@ const ProjectExpensesListItem = (props) => {
                     {expense.createdAt}
                   </Moment>
                 </Typography>
-
+                <ExpensesCommentsForm expenseId={expense.id} />
+                <CommentsList />
                 <Typography>Confirmed ? {expense.confirm}</Typography>
               </div>
             }
@@ -114,13 +123,16 @@ const ProjectExpensesListItem = (props) => {
 
 const mapStateToprops = (state) => {
   return {
-    user: state.userAuth.incomeExpensesProjectCreator
+    currentUser: state.userAuth.currentUser,
+    comments: state.projects.comments
   };
 };
 
 const actions = {
-  incomeExpensesProjectCreator
+  incomeExpensesProjectCreator,
+  expensesCommentsAction
 };
+
 export default connect(
   mapStateToprops,
   actions

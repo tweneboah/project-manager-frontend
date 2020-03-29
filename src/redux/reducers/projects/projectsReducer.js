@@ -6,14 +6,17 @@ import {
   CREATE_EXPENSE,
   CREATE_PROJECT_TODOS,
   FETCH_ALL_PROJECTS_BY_USER,
-  FETCH_PROJECT_TODOS_BY_PROJECT
+  FETCH_PROJECT_TODOS_BY_PROJECT,
+  FETCH_EXPENSES_COMMENTS_BY_EXPENSES,
+  CREATE_EXPENSES_COMMENT
 } from "../../actions/actionTypes/actionTypes";
 
 const INITIAL_STATE = {
   fetchErrors: {},
   projects: [],
   singleProject: null,
-  projectTodos: []
+  projectTodos: [],
+  comments: []
 };
 
 const projectsReducer = (state = INITIAL_STATE, action) => {
@@ -29,7 +32,11 @@ const projectsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         projectTodos: [...action.payload]
       };
-
+    case FETCH_EXPENSES_COMMENTS_BY_EXPENSES:
+      return {
+        ...state,
+        comments: [...action.payload]
+      };
     case FETCH_ALL_PROJECTS_ERRORS:
       return {
         ...state,
