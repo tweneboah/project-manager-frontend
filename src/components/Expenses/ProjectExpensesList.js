@@ -6,7 +6,6 @@ import ProjectExpensesListItem from "./ProjectExpensesListItem";
 import { fetchSingleProject } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
-import { setCurrentUser } from "../../redux/actions/users/usersActions";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -31,7 +30,7 @@ const ProjectExpensesList = (props) => {
   const classes = useStyles();
   const { project, fetchSingleProject, currentUser } = props;
   const { projectId } = useParams();
-  console.log("expnselist", project);
+ 
   const jwt = currentUser && currentUser.jwt;
   useEffect(() => {
     fetchSingleProject(projectId, jwt);
@@ -85,13 +84,14 @@ const ProjectExpensesList = (props) => {
           ) : (
             // Second Container
             <Grid container direction="column" justify="center">
-              {project.singleProject.expenses.map((expense) => {
-                return (
-                  <Grid item key={expense._id}>
-                    <ProjectExpensesListItem expense={expense} />
-                  </Grid>
-                );
-              })}
+              {project.singleProject.expenses &&
+                project.singleProject.expenses.map((expense) => {
+                  return (
+                    <Grid item key={expense._id}>
+                      <ProjectExpensesListItem expense={expense} />
+                    </Grid>
+                  );
+                })}
             </Grid>
           )}
         </React.Fragment>

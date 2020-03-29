@@ -3,21 +3,10 @@ import { connect } from "react-redux";
 import CommentsListItem from "./CommentsListItem";
 
 const CommentsList = (props) => {
-  const { comments } = props;
-  console.log("comments comp", comments);
+  console.log(props);
   return (
     <div>
-      {comments.length > 0 && (
-        <div>
-          {comments.map((comment) => {
-            return (
-              <div>
-                <CommentsListItem comment={comment} />
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <CommentsListItem />
     </div>
   );
 };

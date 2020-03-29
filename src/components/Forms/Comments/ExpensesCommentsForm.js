@@ -9,11 +9,13 @@ import { connect } from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { createExpensesComment } from "../../../redux/actions/comments/expensesComments";
+import { useParams } from "react-router-dom";
+import {
+  createExpensesComment,
+  fetchExpensesComment
+} from "../../../redux/actions/comments/expensesComments";
 import { fetchAllProjectsByUser } from "../../../redux/actions/projects/projectsActions";
 import {
   loginUser,
@@ -41,29 +43,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const ExpensesCommentsForm = (props) => {
+  console.log(props);
+  const { expenseId } = useParams();
   const classes = useStyles();
   const {
     setCurrentUser,
     currentUser,
-    expenseId,
-    createExpensesComment
+    createExpensesComment,
+    fetchExpensesComment
   } = props;
   const { control, handleSubmit, errors } = useForm();
 
   const userId = currentUser && currentUser.id;
   const userToken = currentUser && currentUser.jwt;
-  console.log("From comment form", expenseId);
+  console.log("exp", expenseId);
   const onSubmit = async (data) => {
     const userData = {
       message: data.message,
       user: userId,
       expense: expenseId
     };
-    // await loginUser(userData);
+
     await createExpensesComment(userData, userToken);
-    // await setCurrentUser();
-    fetchAllProjectsByUser(userToken);
-    // props.history.push(`/projects`);
+    await fetchExpensesComment(expenseId, userToken);
+    props.history.push(`/project/expenses/${expenseId}`);
   };
 
   useEffect(() => {
@@ -98,7 +101,7 @@ const ExpensesCommentsForm = (props) => {
         {errors.message && (
           <span style={{ color: "red" }}>Message is required</span>
         )}
-
+        <Button type="submit">Add Comment</Button>
         <ToastContainer autoClose={2000} />
       </form>
     </div>
@@ -109,7 +112,8 @@ const actions = {
   loginUser,
   setCurrentUser,
   createExpensesComment,
-  fetchAllProjectsByUser
+  fetchAllProjectsByUser,
+  fetchExpensesComment
 };
 
 const mapStateToProps = (state) => {

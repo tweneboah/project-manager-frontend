@@ -273,7 +273,6 @@ const Todos = (props) => {
     }
   };
 
-  console.log("Todos", props);
   const [columns, setColumns] = useState(columnsFromBackend);
   return (
     <div

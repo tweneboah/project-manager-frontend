@@ -7,8 +7,7 @@ import {
   CREATE_PROJECT_TODOS,
   FETCH_ALL_PROJECTS_BY_USER,
   FETCH_PROJECT_TODOS_BY_PROJECT,
-  FETCH_EXPENSES_COMMENTS_BY_EXPENSES,
-  CREATE_EXPENSES_COMMENT
+  FETCH_EXPENSES_COMMENTS
 } from "../../actions/actionTypes/actionTypes";
 
 const INITIAL_STATE = {
@@ -26,17 +25,18 @@ const projectsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         projects: [...action.payload]
       };
+    case FETCH_EXPENSES_COMMENTS:
+      return {
+        ...state,
+        comments: [...action.payload]
+      };
     case CREATE_PROJECT_TODOS:
     case FETCH_PROJECT_TODOS_BY_PROJECT:
       return {
         ...state,
         projectTodos: [...action.payload]
       };
-    case FETCH_EXPENSES_COMMENTS_BY_EXPENSES:
-      return {
-        ...state,
-        comments: [...action.payload]
-      };
+
     case FETCH_ALL_PROJECTS_ERRORS:
       return {
         ...state,

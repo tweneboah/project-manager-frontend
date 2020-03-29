@@ -91,7 +91,7 @@ const PrivateNavbarTabs = (props) => {
   //----------------------------------
 
   const handleClick = (event) => {
-    console.log(event);
+   
     // The event represent either click or hover and this determine where we click whether on a button or div and we can get it position event.currentTarget
     setAnchorEl(event.currentTarget); //The element was click
     setOpenMenu(true);

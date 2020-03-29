@@ -7,6 +7,7 @@ import {
   TextField,
   Divider
 } from "@material-ui/core";
+import AccessibilityIcon from "@material-ui/icons/Accessibility";
 import bg from "../../images/bg.jpg";
 import project from "../../images/project.jpg";
 import FooterComponent from "../Footer/FooterComponent";
@@ -81,10 +82,10 @@ const useStyles = makeStyles((theme) => {
       }
     },
     childrenImages: {
-      border: "1px solid green",
+      border: "1px solid white",
       borderRadius: "50%",
-      height: "200px",
-      width: "200px",
+      height: "150px",
+      width: "150px",
       marginTop: "-90px"
     },
     title: {
@@ -175,16 +176,12 @@ const Home = () => {
           className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
           <div>
             <div>
-              <img
-                className={classes.childrenImages}
-                alt="project image"
-                src={bg}
-              />
+              <AccessibilityIcon className={classes.childrenImages} />
             </div>
             <div>
               <Typography
-                style={{ fontFamily: "Bree Serif", fontSize: "2.3rem" }}>
-                Customer Support
+                style={{ fontFamily: "Bree Serif", fontSize: "2rem" }}>
+                What This App can Do for you
               </Typography>
               <Divider
                 style={{ border: "1px solid white", marginBottom: "10px" }}
@@ -193,13 +190,11 @@ const Home = () => {
 
             <div>
               <Typography style={{ fontSize: "1.2rem", color: "#D7D8B8" }}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
+                The main purpose for this app is to keep track your of expenses,
+                progress, duration of any kind of project that you are doing.
+                This App bride the gap of tust between the project owner and the
+                person taking care of the undergoing project. The target users
+                of this app include the following...
               </Typography>
             </div>
 
@@ -225,30 +220,37 @@ const Home = () => {
           className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
           <div>
             <div>
-              <img
-                className={classes.childrenImages}
-                alt="project image"
-                src={bg}
+              <AccessibilityIcon className={classes.childrenImages} />
+            </div>
+            <div>
+              <Typography
+                style={{ fontFamily: "Bree Serif", fontSize: "2rem" }}>
+                Request for Customized Software
+              </Typography>
+              <Divider
+                style={{ border: "1px solid white", marginBottom: "10px" }}
               />
             </div>
+
             <div>
-              <Typography className={classes.title}>
-                What we can do for you
+              <Typography style={{ fontSize: "1.2rem", color: "#D7D8B8" }}>
+                With dedicated and experienced developers, our aim is to listen
+                to our clients voice to deliver good services to promote their
+                business. What kind of app do you need?
               </Typography>
             </div>
+
             <div>
-              <Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-              </Typography>
-            </div>
-            <div>
-              <Button variant="outlined">Read More</Button>
+              <Button
+                style={{
+                  border: "1px solid #9AA841",
+                  color: "white",
+                  margin: "20px",
+                  padding: "10px"
+                }}
+                variant="outlined">
+                Read More
+              </Button>
             </div>
           </div>
         </Grid>
@@ -257,34 +259,42 @@ const Home = () => {
           item
           md={4}
           sm={12}
-          className={`${classes.desktopChildlen} ${classes.mobileChildren}`}
-          style={{ marginTop: "-30px" }}>
+          className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
           <div>
             <div>
-              <img
-                className={classes.childrenImages}
-                alt="project image"
-                src={bg}
+              <AccessibilityIcon className={classes.childrenImages} />
+            </div>
+            <div>
+              <Typography
+                style={{ fontFamily: "Bree Serif", fontSize: "2rem" }}>
+                Customer Support
+              </Typography>
+              <Divider
+                style={{ border: "1px solid white", marginBottom: "10px" }}
               />
             </div>
+
             <div>
-              <Typography className={classes.title}>
-                Request for customised Features
+              <Typography style={{ fontSize: "1.2rem", color: "#D7D8B8" }}>
+                The main purpose for this app is to keep track your of expenses,
+                progress, duration of any kind of project that you are doing.
+                This App bride the gap of tust between the project owner and the
+                person taking care of the undergoing project. The target users
+                of this app include the following...
               </Typography>
             </div>
+
             <div>
-              <Typography>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy
-                text ever since the 1500s, when an unknown printer took a galley
-                of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into
-                electronic typesetting, remaining essentially unchanged. It was
-                popularised in the 1960s with the release of Letraset sheets
-              </Typography>
-            </div>
-            <div>
-              <Button variant="outlined">Read More</Button>
+              <Button
+                style={{
+                  border: "1px solid #9AA841",
+                  color: "white",
+                  margin: "20px",
+                  padding: "10px"
+                }}
+                variant="outlined">
+                Read More
+              </Button>
             </div>
           </div>
         </Grid>

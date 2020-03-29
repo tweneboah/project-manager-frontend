@@ -6,7 +6,8 @@ import {
   Avatar,
   ListItemText,
   Typography,
-  Paper
+  Paper,
+  Button
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Moment from "react-moment";
@@ -15,8 +16,9 @@ import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersAct
 import { API_URL } from "../../config/URLs";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
 import ExpensesCommentsForm from "../Forms/Comments/ExpensesCommentsForm";
-import { expensesCommentsAction } from "../../redux/actions/comments/expensesCommentsAction2";
 import CommentsList from "../Comments/CommentsList";
+import { fetchExpensesComment } from "../../redux/actions/comments/expensesComments";
+import { withRouter } from "react-router-dom";
 
 //CSS
 const useStyles = makeStyles((theme) => ({
@@ -41,19 +43,21 @@ const useStyles = makeStyles((theme) => ({
 const ProjectExpensesListItem = (props) => {
   //CSS
   const classes = useStyles();
+  console.log(props);
   const {
     expense,
     currentUser,
     incomeExpensesProjectCreator,
-    expensesCommentsAction
+    fetchExpensesComment
   } = props;
   const userToken = currentUser && currentUser.jwt;
   const username = currentUser && currentUser.username;
   const expeseId = expense && expense.id;
 
-  useEffect(() => {
-    expensesCommentsAction(userToken, expeseId);
-  }, []);
+  const goToCreateCommentPage = () => {
+    props.history.push(`/project/expenses/${expeseId}/create-comment`);
+  };
+
   return (
     <List className={classes.root}>
       <Paper>
@@ -109,9 +113,6 @@ const ProjectExpensesListItem = (props) => {
                     {expense.createdAt}
                   </Moment>
                 </Typography>
-                <ExpensesCommentsForm expenseId={expense.id} />
-                <CommentsList />
-                <Typography>Confirmed ? {expense.confirm}</Typography>
               </div>
             }
           />
@@ -123,17 +124,16 @@ const ProjectExpensesListItem = (props) => {
 
 const mapStateToprops = (state) => {
   return {
-    currentUser: state.userAuth.currentUser,
-    comments: state.projects.comments
+    currentUser: state.userAuth.currentUser
   };
 };
 
 const actions = {
   incomeExpensesProjectCreator,
-  expensesCommentsAction
+  fetchExpensesComment
 };
 
 export default connect(
   mapStateToprops,
   actions
-)(PrivateRoute(ProjectExpensesListItem));
+)(PrivateRoute(withRouter(ProjectExpensesListItem)));

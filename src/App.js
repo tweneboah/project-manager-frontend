@@ -26,7 +26,6 @@ import MenuDashboard from "./components/Navbar/MenuDashboard";
 import WhatWeCanDoForYou from "./components/Pages/WhatWeCanDoForYou";
 import CustomeSoftwareDevelopment from "./components/Pages/CustomeSoftwareDevelopment";
 import StudyWithMe from "./components/Pages/StudyWithMe";
-
 import ExpensesCommentsForm from "./components/Forms/Comments/ExpensesCommentsForm";
 
 const App = (props) => {
@@ -109,7 +108,7 @@ const App = (props) => {
 
           <Route
             exact
-            path="/project/expenses/:projectId/create-comment"
+            path="/project/expenses/:expenseId/create-comment"
             component={ExpensesCommentsForm}
           />
         </Switch>

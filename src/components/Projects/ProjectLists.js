@@ -68,7 +68,7 @@ const ProjectLists = (props) => {
       </div>
     );
   }
-  console.log(props);
+
   return (
     <div style={{ marginTop: "-50px" }}>
       {projects.projects.length <= 0 ? (
