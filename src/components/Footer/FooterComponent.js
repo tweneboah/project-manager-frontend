@@ -4,8 +4,6 @@ import { CssBaseline, Grid, Hidden } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import footerAdornment from "../../images/emma.jpg";
 import facebook from "../../images/facebook.png";
-import twitter from "../../images/bg.jpg";
-import instagram from "../../images/bg.jpg";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -137,10 +135,10 @@ const FooterComponent = () => {
           <img src={facebook} alt="facebook" className={classes.icon} />
         </Grid>
         <Grid item component={"a"} href="https://github.com/tweneboah">
-          <img src={twitter} alt="twitter" className={classes.icon} />
+          <img src={facebook} alt="facebook" className={classes.icon} />
         </Grid>
         <Grid item component={"a"} href="https://github.com/tweneboah">
-          <img src={instagram} alt="instagram" className={classes.icon} />
+          <img src={facebook} alt="facebook" className={classes.icon} />
         </Grid>
       </Grid>
     </footer>

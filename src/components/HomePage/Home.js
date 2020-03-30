@@ -1,24 +1,33 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Button,
-  Typography,
-  TextField,
-  Divider
-} from "@material-ui/core";
+import { Grid, Button, Typography, Divider } from "@material-ui/core";
 import AccessibilityIcon from "@material-ui/icons/Accessibility";
+import AirplanemodeActiveIcon from "@material-ui/icons/AirplanemodeActive";
+import SwapCallsIcon from "@material-ui/icons/SwapCalls";
 import bg from "../../images/bg.jpg";
 import project from "../../images/project.jpg";
 import FooterComponent from "../Footer/FooterComponent";
 const useStyles = makeStyles((theme) => {
   return {
-    firstContainer: {
-      minHeight: "70vh",
-      backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bg})`,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      marginTop: "-90px"
+    [theme.breakpoints.up("sm")]: {
+      firstContainerDesktop: {
+        minHeight: "70vh",
+        backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        marginTop: "-90px"
+      }
+    },
+
+    [theme.breakpoints.down("sm")]: {
+      firstContainerDesktop: {
+        minHeight: "70vh",
+
+        background: `linear-gradient(301deg, rgba(6,41,6,0.99) 27%, rgba(80,231,199,1) 68%, rgba(0,212,255,1) 100%)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        marginTop: "-90px"
+      }
     },
     secondContainer: {},
 
@@ -36,7 +45,7 @@ const useStyles = makeStyles((theme) => {
     },
     child3: {
       [theme.breakpoints.up("md")]: {
-        background: "pink",
+        background: "red",
         flexGrow: 1,
         margin: "10px"
       }
@@ -44,6 +53,19 @@ const useStyles = makeStyles((theme) => {
 
     desktopChildlen: {
       [theme.breakpoints.up("md")]: {
+        background: "#602115",
+        flexGrow: 1,
+        margin: "10px",
+        marginTop: "-50px",
+        textAlign: "center",
+        padding: "10px",
+        color: "white",
+        boxShadow: "3px 8px 6px -3px black"
+      }
+    },
+
+    mobileChildlen: {
+      [theme.breakpoints.down("md")]: {
         background: "#602115",
         flexGrow: 1,
         margin: "10px",
@@ -67,7 +89,7 @@ const useStyles = makeStyles((theme) => {
     },
     mobileChildren: {
       [theme.breakpoints.down("md")]: {
-        background: "pink",
+        background: "#3A7C7F",
         flexGrow: 1,
         margin: "10px",
         marginTop: "-50px",
@@ -116,7 +138,7 @@ const Home = () => {
         backgroundPosition: "center"
       }}>
       <Grid
-        className={classes.firstContainer}
+        className={`${classes.firstContainerDesktop}`}
         container
         direction="column"
         justify="center"
@@ -220,7 +242,7 @@ const Home = () => {
           className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
           <div>
             <div>
-              <AccessibilityIcon className={classes.childrenImages} />
+              <SwapCallsIcon className={classes.childrenImages} />
             </div>
             <div>
               <Typography
@@ -236,7 +258,8 @@ const Home = () => {
               <Typography style={{ fontSize: "1.2rem", color: "#D7D8B8" }}>
                 With dedicated and experienced developers, our aim is to listen
                 to our clients voice to deliver good services to promote their
-                business. What kind of app do you need?
+                business. What kind of app do you need? been educational, social
+                and business web app, we get you covered at affordable price
               </Typography>
             </div>
 
@@ -262,7 +285,7 @@ const Home = () => {
           className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
           <div>
             <div>
-              <AccessibilityIcon className={classes.childrenImages} />
+              <AirplanemodeActiveIcon className={classes.childrenImages} />
             </div>
             <div>
               <Typography
@@ -276,11 +299,13 @@ const Home = () => {
 
             <div>
               <Typography style={{ fontSize: "1.2rem", color: "#D7D8B8" }}>
-                The main purpose for this app is to keep track your of expenses,
-                progress, duration of any kind of project that you are doing.
-                This App bride the gap of tust between the project owner and the
-                person taking care of the undergoing project. The target users
-                of this app include the following...
+                When it comes to customer support we have dedicated customer
+                care services department who are ready to respond to your
+                queries. We have two Branches, Atonsu-Kumasi-Ghana and
+                China-Qansu Province. Our Team will take you through in service
+                training about how to use the app and they ready to respond to
+                your future question. We also have whatsapp Group for our
+                customers.
               </Typography>
             </div>
 

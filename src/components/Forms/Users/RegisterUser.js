@@ -253,8 +253,7 @@ const actions = {
   setCurrentUser
 };
 
-
 const mapStateToProps = (state) => {
-  return state.userAuth.currentUser
-}
+  return state.userAuth.currentUser;
+};
 export default connect(null, actions)(RegisterUser);
