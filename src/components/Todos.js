@@ -157,7 +157,7 @@ import { API_URL } from "../config/URLs";
 const useStyles = makeStyles((theme) => {
   return {
     dashboardBg: {
-      background: "#333333"
+      background: "#52796F"
     },
     paper: {
       background: "#424242",
@@ -279,7 +279,8 @@ const Todos = (props) => {
       style={{
         display: "flex",
         justifyContent: "center",
-        height: "100%"
+        height: "100%",
+        background: "#52796F"
       }}>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}>
@@ -290,10 +291,11 @@ const Todos = (props) => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                background: "#356357"
+                background: "#354F52",
+                minHeight: "50rem"
               }}
               key={columnId}>
-              <h2>{column.name}</h2>
+              <h2 style={{ color: "#81ecec" }}>{column.name}</h2>
               <div style={{ margin: 8 }}>
                 <Droppable droppableId={columnId} key={columnId}>
                   {(provided, snapshot) => {
@@ -303,8 +305,8 @@ const Todos = (props) => {
                         ref={provided.innerRef}
                         style={{
                           background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "lightgrey",
+                            ? "#015574"
+                            : "#651B34",
                           padding: 4,
                           width: 250,
                           minHeight: 500
@@ -337,7 +339,7 @@ const Todos = (props) => {
                                       <img
                                         className={classes.profilePicture}
                                         alt="profile"
-                                        src={`${API_URL}/${props.url}`}
+                                        src={props.url}
                                       />
                                     </div>{" "}
                                     <div>created By: {props.createdBy}</div>

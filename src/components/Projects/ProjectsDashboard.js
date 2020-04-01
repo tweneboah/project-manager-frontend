@@ -297,7 +297,7 @@ const ProjectsDashboard = (props) => {
           <Grid
             item
             style={{
-              backgroundColor: "##2d3436"
+              backgroundColor: "#2d3436"
             }}>
             {/* Draggable */}
             <Grid item>
@@ -324,6 +324,10 @@ const ProjectsDashboard = (props) => {
                 onClick={goToCreateProjectTodoPage}>
                 Add Todo
               </Button>
+              <p style={{ color: "white" }}>
+                Please try to refresh the page after adding your todo, we are
+                working to fix this bug
+              </p>
             </Grid>
             <Grid
               style={{
@@ -331,7 +335,7 @@ const ProjectsDashboard = (props) => {
                 justifyContent: "center",
                 height: "50%"
               }}>
-              {/* DROP IT HERE */}
+              {/*DRAGGABLE COMPONENT*/}
               <Todos
                 projectTodos={projectTodos}
                 url={url}
@@ -340,11 +344,13 @@ const ProjectsDashboard = (props) => {
               />
             </Grid>
           </Grid>
+          {/* Graph */}
           <Grid
             style={{
               height: "20rem",
               width: "30rem",
-              marginTop: "30px"
+              marginTop: "30px",
+              marginBottom: "200px"
             }}>
             <h2
               style={{

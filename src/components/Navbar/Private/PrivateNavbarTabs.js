@@ -8,6 +8,7 @@ import { API_URL } from "../../../config/URLs";
 import avatar from "../../../images/avatar.png";
 import LoadingComponent from "../../LoadingComponent/LoadingComponent";
 import { withRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 //INLINE STYLES
 //---------------------------------
 const useStyles = makeStyles((theme) => ({
@@ -91,7 +92,6 @@ const PrivateNavbarTabs = (props) => {
   //----------------------------------
 
   const handleClick = (event) => {
-   
     // The event represent either click or hover and this determine where we click whether on a button or div and we can get it position event.currentTarget
     setAnchorEl(event.currentTarget); //The element was click
     setOpenMenu(true);
@@ -114,7 +114,8 @@ const PrivateNavbarTabs = (props) => {
 
   const logoutUser = () => {
     logout();
-    props.history.push("/");
+
+    //props.history.push("/");
   };
   return (
     <React.Fragment>
@@ -124,21 +125,18 @@ const PrivateNavbarTabs = (props) => {
         className={classes.tabContainer}>
         <Tab className={classes.tab} component={Link} to="/" label="Home" />
         <Tab
-          arial-owns={anchorEl ? "simple-menu" : undefined} //arial-owns represent the menu it will render so it will check if there is menu by using the id
-          aria-haspopup={anchorEl ? "true" : undefined} //Pop up the menu
-          onMouseOver={(event) => handleClick(event)}
           className={classes.tab}
           component={Link}
           to="/projects"
           label="Projects"
         />
-        {/* <Tab
+        <Tab
           component={Link}
-          to="/revolution"
+          to="/upload"
           className={classes.tab}
           component={Link}
-          label="Revolution"
-        /> */}
+          label="Upload"
+        />
       </Tabs>
       <Tab
         label={`Logged in as ${currentUser.username}`}
@@ -148,7 +146,7 @@ const PrivateNavbarTabs = (props) => {
         label={
           <img
             className={classes.profilePicture}
-            src={`${API_URL}/${currentUser.picture.url}`}
+            src={currentUser.picture.url}
           />
         }
       />
@@ -160,59 +158,7 @@ const PrivateNavbarTabs = (props) => {
         color="secondary">
         Logout
       </Button>
-      <Menu
-        id="simple-menu" //This is use to represent the tab which triggers this menu
-        anchorEl={anchorEl}
-        open={openMenu}
-        onClose={handleClose}
-        classes={{ paper: classes.menu }}
-        MenuListProps={{
-          onMouseLeave: handleClose
-        }}
-        elevation={0}>
-        <MenuItem
-          onClick={() => {
-            handleClose();
-            setValue(1);
-          }}
-          classes={{
-            root: classes.menuItem
-          }}
-          component={Link}
-          to="/projects">
-          Projects
-        </MenuItem>
-        {/* <MenuItem
-          classes={{ root: classes.menuItem }}
-          onClick={() => {
-            handleClose();
-            setValue(1);
-          }}
-          component={Link}
-          to="/customsoftware">
-          Custom Software development
-        </MenuItem> */}
-        {/* <MenuItem
-          classes={{ root: classes.menuItem }}
-          onClick={() => {
-            handleClose();
-            setValue(1);
-          }}
-          component={Link}
-          to="/mobile">
-          Mobile App development
-        </MenuItem> */}
-        {/* <MenuItem
-          classes={{ root: classes.menuItem }}
-          onClick={() => {
-            handleClose();
-            setValue(1);
-          }}
-          component={Link}
-          to="/website">
-          Website development{" "}
-        </MenuItem> */}
-      </Menu>
+      <ToastContainer autoClose={2000} />
     </React.Fragment>
   );
 };

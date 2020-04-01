@@ -15,8 +15,6 @@ import { connect } from "react-redux";
 import { incomeExpensesProjectCreator } from "../../redux/actions/users/usersActions";
 import { API_URL } from "../../config/URLs";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
-import ExpensesCommentsForm from "../Forms/Comments/ExpensesCommentsForm";
-import CommentsList from "../Comments/CommentsList";
 import { fetchExpensesComment } from "../../redux/actions/comments/expensesComments";
 import { withRouter } from "react-router-dom";
 
@@ -80,7 +78,7 @@ const ProjectExpensesListItem = (props) => {
                   <img
                     className={classes.receiptImage}
                     alt="There is no receipt for this expense"
-                    src={`${API_URL}/${
+                    src={`${
                       expense.receipt
                         ? expense.receipt.url
                         : "There is no receipt for this expense"

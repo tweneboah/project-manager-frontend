@@ -25,7 +25,7 @@ const ProjectListItem = (props) => {
   const goToProjectDashboard = () => {
     history.push(`/project/dashboard/${project.id}`);
   };
-
+  console.log(typeof project);
   return (
     <Card>
       <CardHeader

@@ -4,125 +4,116 @@ import { Grid, Button, Typography, Divider } from "@material-ui/core";
 import AccessibilityIcon from "@material-ui/icons/Accessibility";
 import AirplanemodeActiveIcon from "@material-ui/icons/AirplanemodeActive";
 import SwapCallsIcon from "@material-ui/icons/SwapCalls";
-import bg from "../../images/bg.jpg";
-import project from "../../images/project.jpg";
+import bannerImage from "../../images/bg.jpg";
+import bgImage from "../../images/project.jpg";
 import FooterComponent from "../Footer/FooterComponent";
+import VideoPlayer from "../VideoPlayer/VideoPlayer";
 const useStyles = makeStyles((theme) => {
   return {
+    // First container
     [theme.breakpoints.up("sm")]: {
       firstContainerDesktop: {
+        marginTop: "-50px",
+        minHeight: "100vh",
+        backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bannerImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }
+    },
+
+    [theme.breakpoints.down("xs")]: {
+      firstContainerMobile: {
         minHeight: "70vh",
-        backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bg})`,
+        backgroundImage: `linear-gradient(135deg, #A86041 30%, #115E6780 70%)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         marginTop: "-90px"
       }
     },
-
-    [theme.breakpoints.down("sm")]: {
-      firstContainerDesktop: {
-        minHeight: "70vh",
-
-        background: `linear-gradient(301deg, rgba(6,41,6,0.99) 27%, rgba(80,231,199,1) 68%, rgba(0,212,255,1) 100%)`,
+    // second container
+    [theme.breakpoints.down("md")]: {
+      secondContainerMobile: {
+        backgroundImage: `linear-gradient(135deg, #A86041 30%, #115E6780 70%)`,
         backgroundSize: "cover",
-        backgroundPosition: "center",
+        backgroundPosition: "center"
+      },
+      childrenImages: {
+        border: "1px solid white",
+        borderRadius: "50%",
+        height: "150px",
+        width: "150px",
         marginTop: "-90px"
       }
     },
-    secondContainer: {},
-
+    [theme.breakpoints.up("lg")]: {
+      secondContainerDesktop: {
+        backgroundImage: `linear-gradient(135deg, #50A68480 30%, #115E6780 90%), url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center"
+      }
+    },
     btn1: {
       marginRight: "10px"
     },
-    child1: {
-      background: "green",
-      flexGrow: 1,
-      margin: "2px"
-    },
-    child2: {
-      background: "red",
-      flexGrow: 2
-    },
-    child3: {
-      [theme.breakpoints.up("md")]: {
-        background: "red",
-        flexGrow: 1,
-        margin: "10px"
-      }
-    },
 
-    desktopChildlen: {
-      [theme.breakpoints.up("md")]: {
-        background: "#602115",
+    //Second container children
+    [theme.breakpoints.up("md")]: {
+      desktopChildlen: {
+        background: "#3A7C7F",
         flexGrow: 1,
-        margin: "10px",
-        marginTop: "-50px",
+        marginTop: "-100px",
+        textAlign: "center",
+        padding: "10px",
+        marginBottom: "150px",
         textAlign: "center",
         padding: "10px",
         color: "white",
         boxShadow: "3px 8px 6px -3px black"
-      }
-    },
-
-    mobileChildlen: {
-      [theme.breakpoints.down("md")]: {
-        background: "#602115",
+      },
+      desktopChildlend3: {
+        background: "#3A7C7F",
         flexGrow: 1,
         margin: "10px",
-        marginTop: "-50px",
+        marginTop: "-149.9px",
+        textAlign: "center",
+        padding: "10px",
+        marginBottom: "150px",
+
         textAlign: "center",
         padding: "10px",
         color: "white",
         boxShadow: "3px 8px 6px -3px black"
+      },
+      childrenImages: {
+        border: "1px solid white",
+        borderRadius: "50%",
+        height: "150px",
+        width: "150px",
+        marginTop: "-90px"
       }
     },
 
-    desktopChildlenImage: {
-      [theme.breakpoints.up("md")]: {
-        background: "red",
-        flexGrow: 1,
-        margin: "10px",
-        marginTop: "-50px",
-        textAlign: "center",
-        padding: "10px"
-      }
-    },
     mobileChildren: {
       [theme.breakpoints.down("md")]: {
         background: "#3A7C7F",
         flexGrow: 1,
-        margin: "10px",
+        marginLeft: "10px",
+        marginRight: "10px",
+        textAlign: "center",
+        padding: "10px",
+        marginBottom: "150px",
         marginTop: "-50px",
         textAlign: "center",
         padding: "10px",
-        marginBottom: "150px"
+        color: "white",
+        boxShadow: "3px 8px 6px -3px black"
       }
     },
-    mobileImages: {
-      [theme.breakpoints.down("md")]: {
-        marginBottom: "40px"
-      }
-    },
-    childrenImages: {
-      border: "1px solid white",
-      borderRadius: "50%",
-      height: "150px",
-      width: "150px",
-      marginTop: "-90px"
-    },
-    title: {
-      fontSize: "1.8rem",
-      margin: "9px"
-    },
-    childButton: {
-      margin: "20px",
-      border: "2px solid red"
-    },
+
     callToAction: {
-      [theme.breakpoints.up("md")]: {
-        background: "#0E7C7B",
-        height: "10rem"
-      }
+      background: "#0E7C7B",
+      height: "5rem",
+      fontSize: "1.8rem"
     }
   };
 });
@@ -131,14 +122,10 @@ const Home = () => {
   const classes = useStyles();
 
   return (
-    <div
-      style={{
-        backgroundImage: `linear-gradient(135deg, #A86041 30%, #115E6780 70%), url(${project})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center"
-      }}>
+    <div>
+      {/* first container */}
       <Grid
-        className={`${classes.firstContainerDesktop}`}
+        className={`${classes.firstContainerDesktop} ${classes.firstContainerMobile}`}
         container
         direction="column"
         justify="center"
@@ -148,7 +135,8 @@ const Home = () => {
             style={{
               fontFamily: "Bree Serif",
               fontSize: "3.2rem",
-              color: "#f5f6fa"
+              color: "#f5f6fa",
+              textAlign: "center"
             }}>
             Keep {""} Track of your Project{" "}
           </h1>
@@ -184,13 +172,14 @@ const Home = () => {
           </Grid>
         </Grid>
       </Grid>
+      {/* second container */}
 
       {/* CONTENT */}
       <Grid
         container
         direction="row"
         justify="space-around"
-        className={classes.secondContainer}>
+        className={`${classes.secondContainerMobile} ${classes.secondContainerDesktop}`}>
         <Grid
           item
           md={4}
@@ -282,7 +271,7 @@ const Home = () => {
           item
           md={4}
           sm={12}
-          className={`${classes.desktopChildlen} ${classes.mobileChildren}`}>
+          className={`${classes.desktopChildlend3} ${classes.mobileChildren}`}>
           <div>
             <div>
               <AirplanemodeActiveIcon className={classes.childrenImages} />
@@ -323,6 +312,13 @@ const Home = () => {
             </div>
           </div>
         </Grid>
+      </Grid>
+      {/* Video player */}
+      <Grid style={{ margin: "20px" }}>
+        <h1 style={{ color: "seablue", textAlign: "center" }}>
+          View The demo Video
+        </h1>
+        <VideoPlayer />
       </Grid>
       {/* Call to Action */}
       <Grid

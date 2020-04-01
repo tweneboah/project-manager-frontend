@@ -140,18 +140,24 @@ const ProjectLists = (props) => {
             direction="row"
             justify="center"
             className={classes.parentTwo}>
-            {projects.projects.map((project) => {
-              return (
-                <Grid
-                  item
-                  key={project.id}
-                  md={3}
-                  sm={12}
-                  className={classes.parentTwoChild}>
-                  <ProjectListItem project={project} />
-                </Grid>
-              );
-            })}
+            {projects.projects && projects.projects.length === [] ? (
+              <h1>Loading</h1>
+            ) : (
+              <React.Fragment>
+                {projects.projects.map((project) => {
+                  return (
+                    <Grid
+                      item
+                      key={project.id}
+                      md={3}
+                      sm={12}
+                      className={classes.parentTwoChild}>
+                      <ProjectListItem project={project} />
+                    </Grid>
+                  );
+                })}
+              </React.Fragment>
+            )}
           </Grid>
         </React.Fragment>
       )}

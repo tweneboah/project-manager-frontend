@@ -73,7 +73,7 @@ const PrivateNavbarSideDrawer = (props) => {
             <ListItemText className={classes.drawerItem} disableTypography>
               <img
                 className={classes.profilePicture}
-                src={`${API_URL}/${currentUser.picture.url}`}
+                src={currentUser.picture.url}
               />
             </ListItemText>
           </ListItem>

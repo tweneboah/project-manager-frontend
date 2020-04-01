@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toastr } from "react-redux-toastr";
 import { API_URL } from "../../../config/URLs";
 import {
   REGISTER_USER,
@@ -21,23 +21,11 @@ export const registerUser = (data) => {
         data: data
       });
 
-      // const { jwt } = await userResponse.data;
-      // const { _id, username, email, role, projects } = await userResponse.data
-      //   .user;
-      // console.log(userResponse.data);
-      // const userData = {
-      //   jwt,
-      //   _id,
-      //   username,
-      //   email,
-      //   role,
-      //   projects
-      // };
-
       dispact({
         type: REGISTER_USER,
         payload: userResponse.data
       });
+      toastr.success("Successfully Registered");
       // We have to return the user from here because we need the created user in our frontentend to create it's profile picture
       return userResponse.data;
     } catch (error) {
@@ -45,7 +33,7 @@ export const registerUser = (data) => {
         type: REGISTER_USER_ERROR,
         payload: "Email is taken/password is below 7 characters"
       });
-      toast.error("Invalid credentials");
+      toastr.error("Email/Username is already taken");
     }
   };
 };
@@ -93,22 +81,20 @@ export const loginUser = (data) => {
         createdAt,
         updatedAt
       };
-      console.log("local storage", userResponse.data);
       dispact({
         type: LOGIN_USER,
         payload: userData
       });
-      console.log("userdata", userData);
-      console.log("response", userResponse.data);
+      // console.log("userdata", userData);
+      // console.log("response", userResponse.data);
       localStorage.setItem("user", JSON.stringify(userData));
-
-      toast.success("Successfully logged in");
+      toastr.success("Successfully logged in");
     } catch (error) {
       console.log(error);
       dispact({
-        type: LOGIN_USER_ERROR,
-        payload: "Username/Password is invalid"
+        type: LOGIN_USER_ERROR
       });
+      toastr.error("Username/Password do not match");
     }
   };
 };
@@ -129,6 +115,8 @@ export const logout = () => {
     dispatch({
       type: USER_LOGOUT
     });
+
+    toastr.success("Goodbye");
   };
 };
 

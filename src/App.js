@@ -27,6 +27,7 @@ import WhatWeCanDoForYou from "./components/Pages/WhatWeCanDoForYou";
 import CustomeSoftwareDevelopment from "./components/Pages/CustomeSoftwareDevelopment";
 import StudyWithMe from "./components/Pages/StudyWithMe";
 import ExpensesCommentsForm from "./components/Forms/Comments/ExpensesCommentsForm";
+import Uploads from "./components/Uploads/Uploads";
 
 const App = (props) => {
   const { setCurrentUser, getMyProfile, userAuth } = props;
@@ -111,6 +112,8 @@ const App = (props) => {
             path="/project/expenses/:expenseId/create-comment"
             component={ExpensesCommentsForm}
           />
+
+          <Route exact path="/upload" component={Uploads} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
