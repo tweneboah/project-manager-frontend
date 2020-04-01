@@ -14,13 +14,12 @@ const useStyles = makeStyles((theme) => {
       position: "relative"
     },
     adorment: {
-      width: "15em",
-      height: "15em",
-      verticalAlign: "bottom",
-      [theme.breakpoints.down("md")]: {
+      [theme.breakpoints.up("md")]: {
+        verticalAlign: "bottom",
         width: "21em"
       },
       [theme.breakpoints.down("sm")]: {
+        verticalAlign: "bottom",
         width: "18em"
       }
     },
@@ -126,17 +125,6 @@ const FooterComponent = () => {
         justify="flex-end"
         spacing={2}
         className={classes.socialContainer}>
-        <Grid
-          item
-          component={"a"}
-          href="https://www.facebook.com/affortekghana"
-          rel="noopener noreferrer"
-          target="_blank">
-          <img src={facebook} alt="facebook" className={classes.icon} />
-        </Grid>
-        <Grid item component={"a"} href="https://github.com/tweneboah">
-          <img src={facebook} alt="facebook" className={classes.icon} />
-        </Grid>
         <Grid item component={"a"} href="https://github.com/tweneboah">
           <img src={facebook} alt="facebook" className={classes.icon} />
         </Grid>

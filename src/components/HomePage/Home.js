@@ -113,7 +113,8 @@ const useStyles = makeStyles((theme) => {
     callToAction: {
       background: "#0E7C7B",
       height: "5rem",
-      fontSize: "1.8rem"
+      fontSize: "1.8rem",
+      marginBottom: "20px"
     }
   };
 });
@@ -326,6 +327,11 @@ const Home = () => {
         direction="row"
         justify="center"
         alignItems="center"
+        style={{
+          paddingBottom: "120px",
+          paddingTop: "50px",
+          textAlign: "center"
+        }}
         container>
         <Grid item>
           <Typography
