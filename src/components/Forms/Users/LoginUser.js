@@ -151,7 +151,7 @@ const LoginUser = (props) => {
               variant="contained"
               color="primary"
               className={classes.submit}>
-              {!formState.isSubmitting ? "Loading please wait..." : "Login"}
+              {formState.isSubmitting ? "Loading please wait..." : "Login"}
             </Button>
             <ToastContainer autoClose={2000} />
           </form>
