@@ -53,7 +53,7 @@ const CreateExpensesForm = (props) => {
   const classes = useStyles();
   const { projectId } = useParams();
   const { createExpenses, currentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
   const jwt = currentUser && currentUser.jwt;
   const id = currentUser && currentUser.id;
 
@@ -212,12 +212,13 @@ const CreateExpensesForm = (props) => {
           />
 
           <Button
+            style={{ textTransform: "capitalize" }}
             type="submit"
             fullWidth
             variant="contained"
             color="secondary"
             className={classes.submit}>
-            Add Expenses
+            {formState.isSubmitting ? "Loading please wait" : "Add Expenses"}
           </Button>
         </form>
       </div>

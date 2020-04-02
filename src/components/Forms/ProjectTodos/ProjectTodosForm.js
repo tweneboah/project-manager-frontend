@@ -55,7 +55,7 @@ const CreateprojectTodoForm = (props) => {
   const classes = useStyles();
   const { projectId } = useParams();
   const { createProjectTodo, currentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
   const jwt = currentUser && currentUser.jwt;
   const id = currentUser && currentUser.id;
 
@@ -112,7 +112,7 @@ const CreateprojectTodoForm = (props) => {
             variant="contained"
             color="secondary"
             className={classes.submit}>
-            Add Expenses
+            {formState.isSubmitting ? "Loading Please wait..." : "Add Expense"}
           </Button>
         </form>
       </div>

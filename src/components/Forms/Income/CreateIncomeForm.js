@@ -51,7 +51,7 @@ const CreateIncomeForm = (props) => {
   const { projectId } = useParams();
   console.log(props);
   const { createIncome, currentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
   //Grab the id of the current Logged in User to create the income
   const id = currentUser && currentUser.id;
   const userJwt = currentUser && currentUser.jwt;
@@ -155,12 +155,13 @@ const CreateIncomeForm = (props) => {
           )}
 
           <Button
+            style={{ textTransform: "capitalize" }}
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}>
-            Create
+            {formState.isSubmitting ? "Loading please wait" : "Invest"}
           </Button>
         </form>
       </div>

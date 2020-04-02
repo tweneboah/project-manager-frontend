@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -55,14 +55,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const LoginUser = (props) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { loginUser, setCurrentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
 
   const onSubmit = async (data) => {
     const userData = {
       identifier: data.identifier,
       password: data.password
     };
+    // isSubmitting(() => {
+    //   return formState.isSubmitting;
+    // });
+    console.log(formState.isSubmitting);
     await loginUser(userData);
     await setCurrentUser();
     props.history.push(`/projects`);
@@ -140,12 +145,13 @@ const LoginUser = (props) => {
             )}
 
             <Button
+              style={{ textTransform: "capitalize" }}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}>
-              Login
+              {!formState.isSubmitting ? "Loading please wait..." : "Login"}
             </Button>
             <ToastContainer autoClose={2000} />
           </form>

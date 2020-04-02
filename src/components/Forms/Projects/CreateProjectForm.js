@@ -57,7 +57,7 @@ const CreateProjectForm = (props) => {
   const { projectId } = useParams();
 
   const { createProject, currentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
 
   const userId = currentUser && currentUser.id;
   const userToken = currentUser && currentUser.jwt;
@@ -159,12 +159,15 @@ const CreateProjectForm = (props) => {
             {errors.category && "Your input is required"}
 
             <Button
+              style={{ textTransform: "capitalize" }}
               type="submit"
               fullWidth
               variant="contained"
               color="secondary"
               className={classes.submit}>
-              Create Project
+              {formState.isSubmitting
+                ? "Loading please wait"
+                : "Create Project"}
             </Button>
           </form>
         </div>

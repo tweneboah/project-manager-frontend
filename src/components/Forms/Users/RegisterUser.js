@@ -60,7 +60,7 @@ const RegisterUser = (props) => {
   //css
   const classes = useStyles();
   const { registerUser, setCurrentUser } = props;
-  const { control, handleSubmit, errors } = useForm();
+  const { control, handleSubmit, errors, formState } = useForm();
 
   const onSubmit = async (data) => {
     const userData = {
@@ -230,12 +230,13 @@ const RegisterUser = (props) => {
             )}
 
             <Button
+              style={{ textTransform: "capitalize" }}
               type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}>
-              Register
+              {formState.isSubmitting ? "Loading please wait" : "Register"}
             </Button>
             <ToastContainer autoClose={2000} />
           </form>
