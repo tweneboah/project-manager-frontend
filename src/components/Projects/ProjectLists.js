@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchAllProjectsByUser } from "../../redux/actions/projects/projectsActions";
 import LoadingComponent from "../LoadingComponent/LoadingComponent";
 import StoreIcon from "@material-ui/icons/Store";
-import { Button, Grid } from "@material-ui/core";
+import { Button, Grid, TextField } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import PrivateRoute from "../PrivateRoutes/PrivateRoutes";
@@ -131,6 +131,15 @@ const ProjectLists = (props) => {
                   Add Project
                 </Button>
               </div>
+            </Grid>
+            {/* Child Container */}
+            <Grid container>
+              <Grid>
+                <h1>sort</h1>
+              </Grid>
+              <Grid>
+                <h1>sort</h1>
+              </Grid>
             </Grid>
           </Grid>
 
